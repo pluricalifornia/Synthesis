@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coachella Valley Agricultural Communities: Hierarchical Mind Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      color: #2c3e50;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    
+    #mind-map {
+      width: 100%;
+      height: 700px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: white;
+      overflow: auto;
+      position: relative;
+    }
+    
+    .legend {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #7f8c8d;
+      font-size: 12px;
+    }
+    
+    .instructions {
+      text-align: center;
+      margin: 15px 0;
+      font-style: italic;
+      color: #7f8c8d;
+    }
+
+    .node circle {
+      fill: #fff;
+      stroke-width: 2px;
+    }
+
+    .node text {
+      font: 12px sans-serif;
+    }
+
+    .link {
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    .tooltip {
+      position: absolute;
+      padding: 10px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      max-width: 300px;
+      font-size: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
+    
+    .controls button {
+      padding: 5px 10px;
+      margin-right: 5px;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls button:hover {
+      background-color: #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Coachella Valley Agricultural Communities:<br>Challenges & Solutions</h1>
+    
+    <div class="instructions">
+      <p>Click on nodes to expand/collapse. Drag the diagram to reposition. Hover over nodes for more details.</p>
+    </div>
+    
+    <div id="mind-map">
+      <div class="controls">
+        <button id="expand-btn">Expand All</button>
+        <button id="collapse-btn">Collapse All</button>
+      </div>
+    </div>
+    
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #3498db;"></div>
+        <span>Group 1</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #2ecc71;"></div>
+        <span>Group 2</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #e74c3c;"></div>
+        <span>Group 3</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #f39c12;"></div>
+        <span>Common Challenges</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #9b59b6;"></div>
+        <span>Integrated Solutions</span>
+      </div>
+    </div>
+    
+    <footer>
+      Source: California Land Equity Task Force - Coachella Valley Listening Session, February 2025
+    </footer>
+  </div>
+
+  <!-- D3.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script>
+    // Mind map data structure
+    const data = {
+      name: "Coachella Valley Listening Session",
+      color: "#3498db",
+      details: "Findings from the California Land Equity Task Force's Coachella Valley Listening Session with agricultural communities",
+      children: [
+        {
+          name: "Group 1 Concerns",
+          color: "#3498db",
+          details: "Distinct challenges identified by Group 1 participants",
+          children: [
+            { 
+              name: "Land Tenure Insecurity", 
+              color: "#3498db",
+              details: "Landlord restrictions, rental barriers to assistance programs, concerns about not having someone to leave the land to"
+            },
+            { 
+              name: "Certification Challenges", 
+              color: "#3498db",
+              details: "Different certifications needed for different buyers (Costco, Winco, etc.), difficult to navigate requirements"
+            },
+            { 
+              name: "Labor Management", 
+              color: "#3498db",
+              details: "Trust issues with workers, concerns about potential lawsuits, need more guidance with hiring"
+            },
+            { 
+              name: "Succession Planning", 
+              color: "#3498db",
+              details: "No one to leave the land to when they're gone, concerns about continuity of operations"
+            },
+            { 
+              name: "Community Nursery", 
+              color: "#3498db",
+              details: "Interest in creating a community nursery in a parking lot for 12 trailers, collective projects"
+            }
+          ]
+        },
+        {
+          name: "Group 2 Concerns",
+          color: "#2ecc71",
+          details: "Distinct challenges identified by Group 2 participants",
+          children: [
+            { 
+              name: "Zoning Regulations", 
+              color: "#2ecc71",
+              details: "Restrictive zoning preventing building necessary infrastructure like cold storage, limitations on land use"
+            },
+            { 
+              name: "Agricultural Education", 
+              color: "#2ecc71",
+              details: "Need for education showing diverse pathways in agriculture beyond manual labor, including science and business aspects"
+            },
+            { 
+              name: "Huerto Commercialization", 
+              color: "#2ecc71",
+              details: "Interest in transforming home gardens into commercial operations, need for funding and technical support"
+            },
+            { 
+              name: "Cooperative Models", 
+              color: "#2ecc71",
+              details: "Mixed experiences with cooperative farming, challenges with water access and distribution in cooperatives"
+            },
+            { 
+              name: "Insurance Coverage Gap", 
+              color: "#2ecc71",
+              details: "Large landowners receive better subsidies and insurance, small farmers left vulnerable to climate events"
+            }
+          ]
+        },
+        {
+          name: "Group 3 Concerns",
+          color: "#e74c3c",
+          details: "Distinct challenges identified by Group 3 participants",
+          children: [
+            { 
+              name: "Business Growth", 
+              color: "#e74c3c",
+              details: "Aspirations to grow businesses, desire to make a stable living for families, provide quality food to communities"
+            },
+            { 
+              name: "Tools & Materials Cost", 
+              color: "#e74c3c",
+              details: "High costs of materials, specialized tools aren't readily available like construction tools"
+            },
+            { 
+              name: "Cooperative Structures", 
+              color: "#e74c3c",
+              details: "Interest in forming a cooperative to support smaller farmers with resources, information, and tools"
+            },
+            { 
+              name: "Continuous Outreach", 
+              color: "#e74c3c",
+              details: "Need for ongoing communication when policies change, continuous engagement with communities"
+            },
+            { 
+              name: "Changing Ag Landscape", 
+              color: "#e74c3c",
+              details: "Agriculture is changing, making it harder for smaller farmers to compete with shifting market dynamics"
+            }
+          ]
+        },
+        {
+          name: "Common Challenges",
+          color: "#f39c12",
+          details: "Challenges shared across all three groups during the listening session",
+          children: [
+            { 
+              name: "Market Access & Fair Pricing", 
+              color: "#f39c12",
+              details: "LA wholesalers undercutting producers, difficulty securing fair prices, limited market connections"
+            },
+            { 
+              name: "Climate Vulnerability", 
+              color: "#f39c12",
+              details: "Crop losses from extreme weather, inadequate insurance for small producers, climate impacts on production"
+            },
+            { 
+              name: "Regulatory Complexity", 
+              color: "#f39c12",
+              details: "Navigating permits, regulations, and legal requirements, complex rules not designed for small operations"
+            },
+            { 
+              name: "Water Affordability", 
+              color: "#f39c12",
+              details: "High water costs impact viability of land ownership, water expenses shape agricultural decision-making"
+            },
+            { 
+              name: "Educational Improvement", 
+              color: "#f39c12",
+              details: "Need for agriculture education that presents diverse career pathways beyond manual labor"
+            }
+          ]
+        },
+        {
+          name: "Integrated Solutions",
+          color: "#9b59b6",
+          details: "Comprehensive solutions designed to address both common and group-specific challenges",
+          children: [
+            {
+              name: "Tiered Support Systems",
+              color: "#3498db",
+              details: "Creating pathways from home gardens to commercial operations through graduated assistance",
+              children: [
+                { 
+                  name: "Entry-level support for home gardens", 
+                  color: "#3498db", 
+                  details: "Programs and resources for household-scale agricultural production"
+                },
+                { 
+                  name: "Intermediate assistance for small commercial plots", 
+                  color: "#3498db",
+                  details: "Support for farmers transitioning from subsistence to commercial production" 
+                },
+                { 
+                  name: "Advanced resources for expanding operations", 
+                  color: "#3498db",
+                  details: "Technical and financial resources for growing agricultural enterprises"
+                },
+                { 
+                  name: "Clear progression pathways", 
+                  color: "#3498db",
+                  details: "Defined development paths with appropriate resources at each stage"
+                }
+              ]
+            },
+            {
+              name: "Cooperative Models with Clear Governance",
+              color: "#2ecc71",
+              details: "Developing transparent, equitable cooperative structures with clear agreements",
+              children: [
+                { 
+                  name: "Transparent decision-making processes", 
+                  color: "#2ecc71",
+                  details: "Clear procedures for collective decision-making within cooperative structures"  
+                },
+                { 
+                  name: "Equitable resource allocation", 
+                  color: "#2ecc71",
+                  details: "Fair distribution of resources, benefits, and responsibilities among members"  
+                },
+                { 
+                  name: "Clear written agreements", 
+                  color: "#2ecc71",
+                  details: "Documented rules and expectations for cooperative participation"  
+                },
+                { 
+                  name: "Trust-building collaborations", 
+                  color: "#2ecc71",
+                  details: "Incremental projects to build successful cooperative experiences"  
+                },
+                { 
+                  name: "Community-based governance", 
+                  color: "#2ecc71",
+                  details: "Local control and oversight of cooperative structures"  
+                }
+              ]
+            },
+            {
+              name: "Comprehensive Educational Strategy",
+              color: "#e74c3c",
+              details: "Building multi-level educational approaches for diverse agricultural pathways",
+              children: [
+                { 
+                  name: "Traditional knowledge preservation", 
+                  color: "#e74c3c",
+                  details: "Valuing and maintaining cultural agricultural practices and knowledge"  
+                },
+                { 
+                  name: "Technical agriculture training", 
+                  color: "#e74c3c",
+                  details: "Education in modern agricultural techniques and technologies"  
+                },
+                { 
+                  name: "Business management education", 
+                  color: "#e74c3c",
+                  details: "Training in financial, marketing, and operational aspects of agricultural businesses"  
+                },
+                { 
+                  name: "Diverse career pathway exposure", 
+                  color: "#e74c3c",
+                  details: "Showcasing various roles in agriculture beyond manual labor"  
+                },
+                { 
+                  name: "Multilingual resources & delivery", 
+                  color: "#e74c3c",
+                  details: "Educational materials and instruction in multiple languages"  
+                }
+              ]
+            },
+            {
+              name: "Multi-Level Market Development",
+              color: "#9b59b6",
+              details: "Establishing diverse market channels at different scales with fair pricing mechanisms",
+              children: [
+                { 
+                  name: "Local farmers' markets", 
+                  color: "#9b59b6",
+                  details: "Community-based direct sales opportunities for agricultural producers"  
+                },
+                { 
+                  name: "Regional distribution networks", 
+                  color: "#9b59b6",
+                  details: "Coordinated systems to connect producers with broader markets"  
+                },
+                { 
+                  name: "Scale-appropriate market channels", 
+                  color: "#9b59b6",
+                  details: "Market options suitable for operations of different sizes"  
+                },
+                { 
+                  name: "Digital platforms connecting producers", 
+                  color: "#9b59b6",
+                  details: "Technology solutions to facilitate direct producer-buyer relationships"  
+                },
+                { 
+                  name: "Price transparency mechanisms", 
+                  color: "#9b59b6",
+                  details: "Systems ensuring fair and visible pricing throughout supply chains"  
+                }
+              ]
+            },
+            {
+              name: "Integrated Regulatory Navigation",
+              color: "#f1c40f",
+              details: "Providing centralized guidance through complex regulatory environments",
+              children: [
+                { 
+                  name: "\"Small Farm Navigator\" program", 
+                  color: "#f1c40f",
+                  details: "Dedicated assistance helping small producers navigate regulatory requirements"  
+                },
+                { 
+                  name: "Centralized information access", 
+                  color: "#f1c40f",
+                  details: "Single-point resource for regulatory information across agencies"  
+                },
+                { 
+                  name: "Multilingual materials", 
+                  color: "#f1c40f",
+                  details: "Regulatory guidance in multiple languages appropriate to community needs"  
+                },
+                { 
+                  name: "Technical assistance for compliance", 
+                  color: "#f1c40f",
+                  details: "Practical help meeting regulatory requirements appropriate to farm scale"  
+                },
+                { 
+                  name: "Simplified pathways for small producers", 
+                  color: "#f1c40f",
+                  details: "Streamlined processes designed for small-scale agricultural operations"  
+                }
+              ]
+            },
+            {
+              name: "Participatory Governance Structure",
+              color: "#1abc9c",
+              details: "Ensuring continuous community involvement in policy development and implementation",
+              children: [
+                { 
+                  name: "Advisory councils with diverse representation", 
+                  color: "#1abc9c",
+                  details: "Formal input structures with members from various agricultural communities"  
+                },
+                { 
+                  name: "Transparency in implementation reporting", 
+                  color: "#1abc9c",
+                  details: "Clear communication about program progress and outcomes"  
+                },
+                { 
+                  name: "Regular community forums", 
+                  color: "#1abc9c",
+                  details: "Ongoing opportunities for community feedback and engagement"  
+                },
+                { 
+                  name: "Formal producer input mechanisms", 
+                  color: "#1abc9c",
+                  details: "Structured processes for agricultural producers to shape policies"  
+                },
+                { 
+                  name: "Continuous community engagement", 
+                  color: "#1abc9c",
+                  details: "Ongoing dialog beyond initial consultations and planning"  
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // Initialize counter for node IDs
+    let nodeIdCounter = 0;
+    
+    // Set up the visualization dimensions
+    const width = document.getElementById('mind-map').clientWidth;
+    const height = document.getElementById('mind-map').clientHeight;
+    const margin = {top: 20, right: 120, bottom: 20, left: 120};
+    
+    // Create the SVG container
+    const svg = d3.select('#mind-map')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+    
+    const g = svg.append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    
+    // Add zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.5, 3])
+      .on('zoom', (event) => {
+        g.attr('transform', event.transform);
+      });
+      
+    svg.call(zoom);
+    
+    // Create tooltip div
+    const tooltip = d3.select('body').append('div')
+      .attr('class', 'tooltip');
+    
+    // Create a hierarchical layout
+    const tree = d3.tree()
+      .size([height - margin.top - margin.bottom, width - margin.left - margin.right - 200]);
+    
+    // Create the root node
+    let root = d3.hierarchy(data);
+    
+    // Assign IDs to nodes for tracking
+    root.descendants().forEach(d => {
+      d.id = nodeIdCounter++;
+    });
+    
+    // Initial positioning
+    root.x0 = height / 2;
+    root.y0 = 0;
+    
+    // Collapse all children initially except main categories
+    root.children.forEach(collapse);
+    
+    // Function to collapse nodes
+    function collapse(d) {
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(collapse);
+        d.children = null;
+      }
+    }
+    
+    // Update the tree visualization
+    update(root);
+    
+    // Function to update the visualization
+    function update(source) {
+      // Compute the new tree layout
+      const treeData = tree(root);
+      
+      // Get all nodes and links
+      const nodes = treeData.descendants();
+      const links = treeData.links();
+      
+      // Normalize for fixed-depth
+      nodes.forEach(d => {
+        d.y = d.depth * 180; // Horizontal spacing
+      });
+      
+      // **************** Nodes section ****************
+      
+      // Update the nodes
+      const node = g.selectAll('g.node')
+        .data(nodes, d => d.id);
+      
+      // Enter new nodes
+      const nodeEnter = node.enter().append('g')
+        .attr('class', 'node')
+        .attr('transform', d => `translate(${source.y0}, ${source.x0})`)
+        .on('click', (event, d) => {
+          // Toggle children on click
+          if (d.children) {
+            d._children = d.children;
+            d.children = null;
+          } else {
+            d.children = d._children;
+            d._children = null;
+          }
+          update(d);
+        })
+        .on('mouseover', (event, d) => {
+          tooltip.transition()
+            .duration(200)
+            .style('opacity', .9);
+          tooltip.html(`<strong>${d.data.name}</strong><br>${d.data.details}`)
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 28) + 'px');
+        })
+        .on('mouseout', () => {
+          tooltip.transition()
+            .duration(500)
+            .style('opacity', 0);
+        });
+      
+      // Add circles to the nodes
+      nodeEnter.append('circle')
+        .attr('r', 1e-6)
+        .style('fill', d => d._children ? d.data.color : '#fff')
+        .style('stroke', d => d.data.color);
+      
+      // Add labels to the nodes
+      nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .attr('x', d => d.children || d._children ? -13 : 13)
+        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
+        .text(d => d.data.name)
+        .style('fill-opacity', 1e-6);
+      
+      // Update existing nodes
+      const nodeUpdate = nodeEnter.merge(node);
+      
+      // Transition nodes to their new position
+      nodeUpdate.transition()
+        .duration(750)
+        .attr('transform', d => `translate(${d.y}, ${d.x})`);
+      
+      // Update node attributes and style
+      nodeUpdate.select('circle')
+        .attr('r', d => d.depth === 0 ? 10 : 6)
+        .style('fill', d => d._children ? d.data.color : '#fff')
+        .style('stroke', d => d.data.color)
+        .attr('cursor', 'pointer');
+      
+      nodeUpdate.select('text')
+        .style('fill-opacity', 1)
+        .attr('font-weight', d => d.depth <= 1 ? 'bold' : 'normal');
+      
+      // Remove exiting nodes
+      const nodeExit = node.exit().transition()
+        .duration(750)
+        .attr('transform', d => `translate(${source.y}, ${source.x})`)
+        .remove();
+      
+      // Reduce the node circles size to 0
+      nodeExit.select('circle')
+        .attr('r', 1e-6);
+      
+      // Fade out the text
+      nodeExit.select('text')
+        .style('fill-opacity', 1e-6);
+      
+      // **************** Links section ****************
+      
+      // Update the links
+      const link = g.selectAll('path.link')
+        .data(links, d => d.target.id);
+      
+      // Enter new links
+      const linkEnter = link.enter().insert('path', 'g')
+        .attr('class', 'link')
+        .attr('d', d => {
+          const o = {x: source.x0, y: source.y0};
+          return diagonal(o, o);
+        })
+        .style('stroke', d => d.target.data.color)
+        .style('opacity', 0.7);
+      
+      // Update existing links
+      const linkUpdate = linkEnter.merge(link);
+      
+      // Transition links to their new position
+      linkUpdate.transition()
+        .duration(750)
+        .attr('d', d => diagonal(d.source, d.target))
+        .style('stroke', d => d.target.data.color);
+      
+      // Remove exiting links
+      link.exit().transition()
+        .duration(750)
+        .attr('d', d => {
+          const o = {x: source.x, y: source.y};
+          return diagonal(o, o);
+        })
+        .remove();
+      
+      // Store the old positions for transition
+      nodes.forEach(d => {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+      
+      // Creates a curved (diagonal) path from parent to child nodes
+      function diagonal(s, d) {
+        return `M ${s.y} ${s.x}
+                C ${(s.y + d.y) / 2} ${s.x},
+                  ${(s.y + d.y) / 2} ${d.x},
+                  ${d.y} ${d.x}`;
+      }
+    }
+    
+    // Function to expand all nodes
+    function expandAll() {
+      function expand(d) {
+        if (d._children) {
+          d.children = d._children;
+          d._children = null;
+          d.children.forEach(expand);
+        }
+      }
+      expand(root);
+      update(root);
+    }
+    
+    // Function to collapse all nodes except first level
+    function collapseAll() {
+      function collapse(d) {
+        if (d.children) {
+          d._children = d.children;
+          d.children = null;
+          d._children.forEach(collapse);
+        }
+      }
+      
+      if (root.children) {
+        root.children.forEach(d => {
+          if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+          }
+        });
+      }
+      
+      update(root);
+    }
+    
+    // Add event listeners to buttons
+    document.getElementById('expand-btn').addEventListener('click', expandAll);
+    document.getElementById('collapse-btn').addEventListener('click', collapseAll);
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const newWidth = document.getElementById('mind-map').clientWidth;
+      const newHeight = document.getElementById('mind-map').clientHeight;
+      
+      svg.attr('width', newWidth)
+         .attr('height', newHeight);
+      
+      tree.size([newHeight - margin.top - margin.bottom, newWidth - margin.left - margin.right - 200]);
+      
+      update(root);
+    });
+  </script>
+</body>
+</html>
