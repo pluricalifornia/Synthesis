@@ -534,9 +534,11 @@
     // Initialize counter for node IDs
     let nodeIdCounter = 0;
     
-    // Assign IDs to nodes for tracking
+    // Assign IDs to nodes for tracking and store original data
     root.descendants().forEach(d => {
       d.id = nodeIdCounter++;
+      // Store original data to be able to reconstruct the tree later
+      d.data.originalChildren = d.data.children ? [...d.data.children] : null;
     });
     
     // Initial positioning
@@ -703,58 +705,66 @@
       }
     }
     
-    // Function to expand all nodes
+    // Improved function to expand ALL nodes at ANY state
     function expandAll() {
-      function expand(d) {
-        if (d._children) {
-          d.children = d._children;
-          d._children = null;
-          d.children.forEach(expand);
+      // Recursive function to expand all nodes
+      function expandRecursive(node) {
+        // Expand this node first if it has hidden children
+        if (node._children) {
+          node.children = node._children;
+          node._children = null;
+        }
+        
+        // Then expand all visible children recursively
+        if (node.children) {
+          node.children.forEach(expandRecursive);
         }
       }
-      expand(root);
+      
+      // Start from the root
+      expandRecursive(root);
+      
+      // Update the visualization
       update(root);
     }
     
-    // Function to collapse all nodes except first level
+    // Improved function to collapse ALL nodes at ANY state, except the root's immediate children
     function collapseAll() {
+      // Recursive function to collapse all nodes
+      function collapseRecursive(node) {
+        // First collapse all children recursively
+        if (node.children) {
+          node.children.forEach(collapseRecursive);
+          
+          // If this is not an immediate child of root, collapse it
+          if (node.parent && node.parent !== root) {
+            node._children = node.children;
+            node.children = null;
+          }
+        }
+      }
+      
+      // Handle the immediate children of root separately
       if (root.children) {
-        root.children.forEach(function(child) {
+        root.children.forEach(child => {
+          // First collapse all descendants recursively
           if (child.children) {
+            child.children.forEach(collapseRecursive);
+            
+            // Then collapse this child's children
             child._children = child.children;
-            child._children.forEach(collapseAllChildren);
             child.children = null;
           }
         });
-        update(root);
       }
+      
+      // Update the visualization
+      update(root);
     }
     
-    // Helper function to recursively collapse all children
-    function collapseAllChildren(d) {
-      if (d.children) {
-        d._children = d.children;
-        d._children.forEach(collapseAllChildren);
-        d.children = null;
-      }
-    }
-    
-    // Wait for the DOM to be fully loaded before adding event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('expand-all').addEventListener('click', expandAll);
-      document.getElementById('collapse-all').addEventListener('click', collapseAll);
-    });
-    
-    // Directly bind the events in case DOMContentLoaded already fired
-    const expandBtn = document.getElementById('expand-all');
-    if (expandBtn) {
-      expandBtn.addEventListener('click', expandAll);
-    }
-    
-    const collapseBtn = document.getElementById('collapse-all');
-    if (collapseBtn) {
-      collapseBtn.addEventListener('click', collapseAll);
-    }
+    // Immediately set up the event listeners for the buttons
+    document.getElementById('expand-all').addEventListener('click', expandAll);
+    document.getElementById('collapse-all').addEventListener('click', collapseAll);
     
     // Handle window resize
     window.addEventListener('resize', () => {
