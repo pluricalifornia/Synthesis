@@ -96,6 +96,7 @@
       max-width: 300px;
       font-size: 12px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 100;
     }
     
     .controls {
@@ -129,8 +130,8 @@
     
     <div id="mind-map">
       <div class="controls">
-        <button id="expand-btn">Expand All</button>
-        <button id="collapse-btn">Collapse All</button>
+        <button id="expand-all">Expand All</button>
+        <button id="collapse-all">Collapse All</button>
       </div>
     </div>
     
@@ -496,9 +497,6 @@
       ]
     };
 
-    // Initialize counter for node IDs
-    let nodeIdCounter = 0;
-    
     // Set up the visualization dimensions
     const width = document.getElementById('mind-map').clientWidth;
     const height = document.getElementById('mind-map').clientHeight;
@@ -515,7 +513,7 @@
     
     // Add zoom behavior
     const zoom = d3.zoom()
-      .scaleExtent([0.5, 3])
+      .scaleExtent([0.5, 2])
       .on('zoom', (event) => {
         g.attr('transform', event.transform);
       });
@@ -532,6 +530,9 @@
     
     // Create the root node
     let root = d3.hierarchy(data);
+    
+    // Initialize counter for node IDs
+    let nodeIdCounter = 0;
     
     // Assign IDs to nodes for tracking
     root.descendants().forEach(d => {
@@ -717,30 +718,43 @@
     
     // Function to collapse all nodes except first level
     function collapseAll() {
-      function collapse(d) {
-        if (d.children) {
-          d._children = d.children;
-          d.children = null;
-          d._children.forEach(collapse);
-        }
-      }
-      
       if (root.children) {
-        root.children.forEach(d => {
-          if (d.children) {
-            d._children = d.children;
-            d._children.forEach(collapse);
-            d.children = null;
+        root.children.forEach(function(child) {
+          if (child.children) {
+            child._children = child.children;
+            child._children.forEach(collapseAllChildren);
+            child.children = null;
           }
         });
+        update(root);
       }
-      
-      update(root);
     }
     
-    // Add event listeners to buttons
-    document.getElementById('expand-btn').addEventListener('click', expandAll);
-    document.getElementById('collapse-btn').addEventListener('click', collapseAll);
+    // Helper function to recursively collapse all children
+    function collapseAllChildren(d) {
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(collapseAllChildren);
+        d.children = null;
+      }
+    }
+    
+    // Wait for the DOM to be fully loaded before adding event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('expand-all').addEventListener('click', expandAll);
+      document.getElementById('collapse-all').addEventListener('click', collapseAll);
+    });
+    
+    // Directly bind the events in case DOMContentLoaded already fired
+    const expandBtn = document.getElementById('expand-all');
+    if (expandBtn) {
+      expandBtn.addEventListener('click', expandAll);
+    }
+    
+    const collapseBtn = document.getElementById('collapse-all');
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', collapseAll);
+    }
     
     // Handle window resize
     window.addEventListener('resize', () => {
