@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coachella Valley Agricultural Communities: Hierarchical Mind Map</title>
+  <title>Coachella Valley Agricultural Communities: Updated Mind Map</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,8 +21,18 @@
     
     h1 {
       text-align: center;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      font-size: 22px;
+    }
+    
+    h2 {
+      text-align: center;
+      margin-top: 0;
       margin-bottom: 30px;
       color: #2c3e50;
+      font-size: 18px;
+      font-weight: normal;
     }
     
     #mind-map {
@@ -122,7 +132,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Coachella Valley Agricultural Communities:<br>Challenges & Solutions</h1>
+    <h1>California Agricultural Land Equity Task Force</h1>
+    <h2>Coachella Valley Listening Session: Findings & Synthesis</h2>
     
     <div class="instructions">
       <p>Click on nodes to expand/collapse. Drag the diagram to reposition. Hover over nodes for more details.</p>
@@ -138,15 +149,15 @@
     <div class="legend">
       <div class="legend-item">
         <div class="legend-color" style="background-color: #3498db;"></div>
-        <span>Group 1</span>
+        <span>Group 1 Concerns</span>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #2ecc71;"></div>
-        <span>Group 2</span>
+        <span>Group 2 Concerns</span>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #e74c3c;"></div>
-        <span>Group 3</span>
+        <span>Group 3 Concerns</span>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #f39c12;"></div>
@@ -155,6 +166,10 @@
       <div class="legend-item">
         <div class="legend-color" style="background-color: #9b59b6;"></div>
         <span>Integrated Solutions</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #34495e;"></div>
+        <span>Proposed State Actions</span>
       </div>
     </div>
     
@@ -169,8 +184,8 @@
     // Mind map data structure
     const data = {
       name: "Coachella Valley Listening Session",
-      color: "#3498db",
-      details: "Findings from the California Land Equity Task Force's Coachella Valley Listening Session with agricultural communities",
+      color: "#34495e",
+      details: "Findings from the California Land Equity Task Force with agricultural communities including migrant farmworkers, tenant farmers, small farmers, and huerto operators",
       children: [
         {
           name: "Group 1 Concerns",
@@ -180,27 +195,32 @@
             { 
               name: "Land Tenure Insecurity", 
               color: "#3498db",
-              details: "Landlord restrictions, rental barriers to assistance programs, concerns about not having someone to leave the land to"
+              details: "USDA doesn't help renters, landlord restrictions on harvesting and business activities, concerns about succession - no one to leave land to" 
             },
             { 
               name: "Certification Challenges", 
               color: "#3498db",
-              details: "Different certifications needed for different buyers (Costco, Winco, etc.), difficult to navigate requirements"
+              details: "Different food safety certifications needed depending on the buyer (Costco, Winco, etc.), need for guidance navigating certification requirements"
             },
             { 
               name: "Labor Management", 
               color: "#3498db",
-              details: "Trust issues with workers, concerns about potential lawsuits, need more guidance with hiring"
+              details: "Trust issues with workers (mentioned lawsuits), need more time to dedicate to crops, too many political issues with hiring"
             },
             { 
-              name: "Succession Planning", 
+              name: "Agricultural Losses", 
               color: "#3498db",
-              details: "No one to leave the land to when they're gone, concerns about continuity of operations"
+              details: "Lost 100 acres of green beans, lost significant moringa crops, climate and temperature limitations in Coachella restrict what they can grow"
             },
             { 
-              name: "Community Nursery", 
+              name: "Community Resources", 
               color: "#3498db",
-              details: "Interest in creating a community nursery in a parking lot for 12 trailers, collective projects"
+              details: "Interest in creating a community nursery in a parking lot for 12 trailers, interest in forming a union for mutual support"
+            },
+            { 
+              name: "Financial Support Needs", 
+              color: "#3498db",
+              details: "Working with large companies isn't profitable due to low payments, need practical help beyond talk, more help for machinery and equipment"
             }
           ]
         },
@@ -210,29 +230,34 @@
           details: "Distinct challenges identified by Group 2 participants",
           children: [
             { 
-              name: "Zoning Regulations", 
+              name: "Land & Huertos", 
               color: "#2ecc71",
-              details: "Restrictive zoning preventing building necessary infrastructure like cold storage, limitations on land use"
+              details: "Various herbs for home remedies, vegetables, fruits in gardens. Blueberries, grapefruits, citrus, strawberries, and pomegranates common. Natural pest management strategies important."
             },
             { 
-              name: "Agricultural Education", 
+              name: "Business Interests", 
               color: "#2ecc71",
-              details: "Need for education showing diverse pathways in agriculture beyond manual labor, including science and business aspects"
+              details: "Some rent up to 20 acres, seasonal crops include corn, melon, watermelon. Little difference between renting and owning due to high water costs and taxes."
             },
             { 
-              name: "Huerto Commercialization", 
+              name: "Youth & Education", 
               color: "#2ecc71",
-              details: "Interest in transforming home gardens into commercial operations, need for funding and technical support"
+              details: "Agricultural skills learned through family rather than formal education. Strong interest in schools teaching agricultural skills and business concepts."
             },
             { 
               name: "Cooperative Models", 
               color: "#2ecc71",
-              details: "Mixed experiences with cooperative farming, challenges with water access and distribution in cooperatives"
+              details: "Mixed experiences with cooperative farming, challenges with water access and distribution in cooperatives, preference for starting small before cooperatives."
             },
             { 
-              name: "Insurance Coverage Gap", 
+              name: "Government Support", 
               color: "#2ecc71",
-              details: "Large landowners receive better subsidies and insurance, small farmers left vulnerable to climate events"
+              details: "Concerns about restrictive regulations especially regarding pest management, preference for natural methods, desire for programs that understand small-scale operations."
+            },
+            { 
+              name: "Infrastructure Issues", 
+              color: "#2ecc71",
+              details: "Complaints about not being allowed to build cold storage due to zoning regulations, need for more help with huerto commercialization."
             }
           ]
         },
@@ -244,27 +269,32 @@
             { 
               name: "Business Growth", 
               color: "#e74c3c",
-              details: "Aspirations to grow businesses, desire to make a stable living for families, provide quality food to communities"
+              details: "Goals to make a stable living for families, grow their businesses, provide quality food to surrounding communities"
             },
             { 
               name: "Tools & Materials Cost", 
               color: "#e74c3c",
-              details: "High costs of materials, specialized tools aren't readily available like construction tools"
+              details: "High costs of materials, particularly chemicals. Specialized tools aren't readily available like construction tools."
             },
             { 
-              name: "Cooperative Structures", 
+              name: "Pricing Issues", 
               color: "#e74c3c",
-              details: "Interest in forming a cooperative to support smaller farmers with resources, information, and tools"
+              details: "Large corporations buy at very low prices and resell at higher prices; farmers do all the work but corporations reap the benefits."
             },
             { 
-              name: "Continuous Outreach", 
+              name: "Financial Barriers", 
               color: "#e74c3c",
-              details: "Need for ongoing communication when policies change, continuous engagement with communities"
+              details: "Unfavorable or nonexistent loans, costly requirements they aren't always aware of, need for better loans with favorable terms."
             },
             { 
-              name: "Financing", 
+              name: "Information Access", 
               color: "#e74c3c",
-              details: "There is no loans available to create viable farm business, and those available are not on favorable terms"
+              details: "Lack of centralized information, need for continuous outreach when policies change, centralized access to information and tools."
+            },
+            { 
+              name: "Cooperative Support", 
+              color: "#e74c3c",
+              details: "Need for a cooperative to support smaller farmers with resources, information, and tools in a changing agricultural landscape."
             }
           ]
         },
@@ -276,221 +306,248 @@
             { 
               name: "Market Access & Fair Pricing", 
               color: "#f39c12",
-              details: "LA wholesalers undercutting producers, difficulty securing fair prices, limited market connections"
+              details: "Los Angeles wholesalers undercutting producers, difficulty securing fair prices, limited market connections, better market access prioritized over land ownership."
             },
             { 
               name: "Insurance & Climate Vulnerability", 
               color: "#f39c12",
-              details: "Crop losses from extreme weather, inadequate insurance for small producers, climate impacts on production, and lack of financing to build resilient businesses"
+              details: "Significant crop losses due to extreme weather events, inadequate insurance options for small producers, climate impacts on production."
             },
             { 
               name: "Regulatory Complexity", 
               color: "#f39c12",
-              details: "Navigating permits, regulations, and legal requirements, complex rules not designed for small operations"
+              details: "Frustration with navigating complex regulatory environments not designed for small-scale operations, need for centralized information resources."
             },
             { 
-              name: "Water Affordability", 
+              name: "Water Affordability & Land Tenure", 
               color: "#f39c12",
-              details: "High water costs impact viability of land ownership, water expenses shape agricultural decision-making"
+              details: "High water costs impact viability of land ownership, water expenses fundamentally shape agricultural decision-making in the region. Renting also limits access to government assistance"
             },
             { 
               name: "Educational Improvement", 
               color: "#f39c12",
-              details: "Need for agriculture education that presents diverse career pathways beyond manual labor"
+              details: "Desire for improved agricultural education that presents diverse career pathways beyond manual labor, concern about intergenerational mobility."
             }
           ]
         },
         {
-          name: "Integrated Solutions",
+          name: "Community-Proposed Integrated Solutions",
           color: "#9b59b6",
           details: "Comprehensive solutions designed to address both common and group-specific challenges",
           children: [
             {
               name: "Tiered Support Systems",
-              color: "#3498db",
-              details: "Creating pathways from home gardens to commercial operations through graduated assistance",
+              color: "#9b59b6",
+              details: "Support programs for various stages of agricultural development: from subsistence huertos to growth-oriented small businesses",
               children: [
                 { 
                   name: "Entry-level support for home gardens", 
-                  color: "#3498db", 
+                  color: "#9b59b6", 
                   details: "Programs and resources for household-scale agricultural production"
                 },
                 { 
-                  name: "Intermediate assistance for small commercial plots", 
-                  color: "#3498db",
+                  name: "Intermediate assistance for small plot operations", 
+                  color: "#9b59b6",
                   details: "Support for farmers transitioning from subsistence to commercial production" 
                 },
                 { 
                   name: "Advanced resources for expanding operations", 
-                  color: "#3498db",
-                  details: "Technical and publicly-backed loans for growing agricultural enterprises"
+                  color: "#9b59b6",
+                  details: "Technical and financial resources for growing agricultural enterprises"
                 },
                 { 
-                  name: "Clear progression pathways", 
-                  color: "#3498db",
-                  details: "Defined development paths with appropriate resources at each stage"
+                  name: "Progressive pathways respecting aspirations", 
+                  color: "#9b59b6",
+                  details: "Creating pathways for progression while respecting different goals and aspirations"
                 }
               ]
             },
             {
               name: "Cooperative Models with Clear Governance",
-              color: "#2ecc71",
-              details: "Developing transparent, equitable cooperative structures with clear agreements",
+              color: "#9b59b6",
+              details: "Addressing challenges in collective approaches with transparent structures and public oversight",
               children: [
                 { 
-                  name: "Transparent decision-making processes", 
-                  color: "#2ecc71",
-                  details: "Clear procedures for collective decision-making within cooperative structures"  
+                  name: "Clear governance protocols", 
+                  color: "#9b59b6",
+                  details: "Establishing clear procedures for cooperative decision-making"  
+                },
+                { 
+                  name: "Transparent decision-making", 
+                  color: "#9b59b6",
+                  details: "Open and clear processes for collective decisions"  
                 },
                 { 
                   name: "Equitable resource allocation", 
-                  color: "#2ecc71",
-                  details: "Fair distribution of resources, benefits, and responsibilities among members"  
+                  color: "#9b59b6",
+                  details: "Fair distribution of resources among cooperative members"  
                 },
                 { 
-                  name: "Clear written agreements", 
-                  color: "#2ecc71",
-                  details: "Documented rules and expectations for cooperative participation"  
-                },
-                { 
-                  name: "Trust-building collaborations", 
-                  color: "#2ecc71",
-                  details: "Incremental projects to build successful cooperative experiences"  
-                },
-                { 
-                  name: "Community-based governance", 
-                  color: "#2ecc71",
-                  details: "Local control and oversight of cooperative structures"  
+                  name: "Incremental trust-building", 
+                  color: "#9b59b6",
+                  details: "Starting with small-scale collaborations to build trust over time"  
                 }
               ]
             },
             {
               name: "Comprehensive Educational Strategy",
-              color: "#e74c3c",
-              details: "Building multi-level educational approaches for diverse agricultural pathways",
+              color: "#9b59b6",
+              details: "Transforming agricultural education to integrate multiple visions across groups",
               children: [
                 { 
-                  name: "Traditional knowledge preservation", 
-                  color: "#e74c3c",
-                  details: "Valuing and maintaining cultural agricultural practices and knowledge"  
+                  name: "Traditional knowledge transmission", 
+                  color: "#9b59b6",
+                  details: "Honoring and preserving traditional agricultural practices"  
                 },
                 { 
-                  name: "Technical agriculture training", 
-                  color: "#e74c3c",
-                  details: "Education in modern agricultural techniques and technologies"  
+                  name: "Technical and professional pathways", 
+                  color: "#9b59b6",
+                  details: "Building pathways to technical and professional roles in agriculture"  
                 },
                 { 
-                  name: "Business management education", 
-                  color: "#e74c3c",
-                  details: "Training in financial, marketing, and operational aspects of agricultural businesses"  
+                  name: "Multi-level educational programs", 
+                  color: "#9b59b6",
+                  details: "Programs spanning from basic skills to advanced technical knowledge"  
                 },
                 { 
-                  name: "Diverse career pathway exposure", 
-                  color: "#e74c3c",
-                  details: "Showcasing various roles in agriculture beyond manual labor"  
-                },
-                { 
-                  name: "Multilingual resources & delivery", 
-                  color: "#e74c3c",
-                  details: "Educational materials and instruction in multiple languages"  
+                  name: "Diverse career options", 
+                  color: "#9b59b6",
+                  details: "Presenting diverse options while honoring traditional practices"  
                 }
               ]
             },
             {
               name: "Multi-Level Market Development",
               color: "#9b59b6",
-              details: "Establishing diverse market channels at different scales with fair pricing mechanisms",
+              details: "Different scales of production require varied market access solutions",
               children: [
                 { 
                   name: "Local farmers' markets", 
                   color: "#9b59b6",
-                  details: "Community-based direct sales opportunities for agricultural producers"  
+                  details: "Direct consumer sales opportunities for small producers"  
                 },
                 { 
-                  name: "Regional distribution networks", 
+                  name: "Aggregation systems", 
                   color: "#9b59b6",
-                  details: "Coordinated systems to connect producers with broader markets"  
+                  details: "Systems giving medium-sized operations better negotiating power"  
                 },
                 { 
-                  name: "Scale-appropriate market channels", 
+                  name: "Digital platforms", 
                   color: "#9b59b6",
-                  details: "Market options suitable for operations of different sizes"  
-                },
-                { 
-                  name: "Digital platforms connecting producers", 
-                  color: "#9b59b6",
-                  details: "Technology solutions to facilitate direct producer-buyer relationships"  
+                  details: "Technologies connecting producers to appropriate buyers"  
                 },
                 { 
                   name: "Price transparency mechanisms", 
                   color: "#9b59b6",
-                  details: "Systems ensuring fair and visible pricing throughout supply chains"  
+                  details: "Systems addressing concerns about wholesalers undercutting prices"  
                 }
               ]
             },
             {
               name: "Integrated Regulatory Navigation",
-              color: "#f1c40f",
-              details: "Providing centralized guidance through complex regulatory environments",
+              color: "#9b59b6",
+              details: "Coordinated assistance programs to help navigate complex requirements",
               children: [
                 { 
-                  name: "\"Small Farm Navigator\" program", 
-                  color: "#f1c40f",
-                  details: "Dedicated assistance helping small producers navigate regulatory requirements"  
+                  name: "Personalized guidance", 
+                  color: "#9b59b6",
+                  details: "Individualized help through regulatory processes"  
                 },
                 { 
                   name: "Centralized information access", 
-                  color: "#f1c40f",
-                  details: "Single-point resource for regulatory information across agencies"  
+                  color: "#9b59b6",
+                  details: "Single source for regulatory information across agencies"  
                 },
                 { 
                   name: "Multilingual materials", 
-                  color: "#f1c40f",
-                  details: "Regulatory guidance in multiple languages appropriate to community needs"  
+                  color: "#9b59b6",
+                  details: "Resources in multiple languages for diverse communities"  
                 },
                 { 
-                  name: "Technical assistance for compliance", 
-                  color: "#f1c40f",
-                  details: "Practical help meeting regulatory requirements appropriate to farm scale"  
-                },
-                { 
-                  name: "Simplified pathways for small producers", 
-                  color: "#f1c40f",
-                  details: "Streamlined processes designed for small-scale agricultural operations"  
+                  name: "Simplified pathways", 
+                  color: "#9b59b6",
+                  details: "Streamlined processes for small-scale producers while maintaining standards"  
                 }
               ]
             },
             {
               name: "Participatory Governance Structure",
-              color: "#1abc9c",
-              details: "Ensuring continuous community involvement in policy development and implementation",
+              color: "#9b59b6",
+              details: "Ensuring meaningful inclusion in decision-making across all groups",
               children: [
                 { 
-                  name: "Advisory councils with diverse representation", 
-                  color: "#1abc9c",
-                  details: "Formal input structures with members from various agricultural communities"  
+                  name: "Institutionalized community participation", 
+                  color: "#9b59b6",
+                  details: "Formalized ongoing community input beyond initial consultations"  
                 },
                 { 
-                  name: "Transparency in implementation reporting", 
-                  color: "#1abc9c",
-                  details: "Clear communication about program progress and outcomes"  
+                  name: "Transparent implementation reporting", 
+                  color: "#9b59b6",
+                  details: "Clear reporting on progress and outcomes of initiatives"  
                 },
                 { 
                   name: "Regular community forums", 
-                  color: "#1abc9c",
-                  details: "Ongoing opportunities for community feedback and engagement"  
+                  color: "#9b59b6",
+                  details: "Ongoing dialog with community members & respective organizations"  
                 },
                 { 
-                  name: "Formal producer input mechanisms", 
-                  color: "#1abc9c",
-                  details: "Structured processes for agricultural producers to shape policies"  
-                },
-                { 
-                  name: "Continuous community engagement", 
-                  color: "#1abc9c",
-                  details: "Ongoing dialog beyond initial consultations and planning"  
+                  name: "Diverse representation", 
+                  color: "#9b59b6",
+                  details: "Ensuring governance represents the full spectrum of agricultural operations"  
                 }
               ]
+            }
+          ]
+        },
+        {
+          name: "Participant-Proposed State Actions",
+          color: "#34495e",
+          details: "Specific policy and program recommendations for government agencies",
+          children: [
+            { 
+              name: "Publicly-Funded Local Food Hubs", 
+              color: "#34495e",
+              details: "State government establishing publicly-funded local food hubs to address market access challenges" 
+            },
+            { 
+              name: "Rural Zoning Code Reform", 
+              color: "#34495e",
+              details: "State and county governments reforming publicly-administered rural zoning codes to remove infrastructure barriers"
+            },
+            { 
+              name: "Public Disaster Insurance Expansion", 
+              color: "#34495e",
+              details: "State legislature mandating expanded public disaster insurance accessibility for small and tenant farmers"
+            },
+            { 
+              name: "State-Funded Huerto Development Program", 
+              color: "#34495e",
+              details: "State government establishing a program to support home gardens and provide pathways to commercialization"
+            },
+            { 
+              name: "Public Agricultural Loan Programs", 
+              color: "#34495e",
+              details: "State financial agencies implementing publicly-administered loan programs designed for small farmers"
+            },
+            { 
+              name: "K-12 Agricultural Curriculum Reform", 
+              color: "#34495e",
+              details: "State education departments mandating integration of agricultural entrepreneurship into public school curricula"
+            },
+            { 
+              name: "Publicly-Staffed Navigator Program", 
+              color: "#34495e",
+              details: "State agricultural departments creating navigator programs to help with regulatory complexity"
+            },
+            { 
+              name: "Community Water Systems Support", 
+              color: "#34495e",
+              details: "State water boards establishing publicly-supported community water systems with democratic governance"
+            },
+            { 
+              name: "Cooperative Distribution Networks", 
+              color: "#34495e",
+              details: "State support for publicly-backed cooperative distribution networks to overcome market access barriers"
             }
           ]
         }
