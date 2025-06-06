@@ -1,840 +1,1398 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coachella Valley Agricultural Communities: Updated Mind Map</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f8f9fa;
-      color: #2c3e50;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Bloomington Warehouse Ownership Network Map</title>
     
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #2c3e50;
-      font-size: 22px;
-    }
-    
-    h2 {
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 30px;
-      color: #2c3e50;
-      font-size: 18px;
-      font-weight: normal;
-    }
-    
-    #mind-map {
-      width: 100%;
-      height: 700px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: white;
-      overflow: auto;
-      position: relative;
-    }
-    
-    .legend {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    
-    .legend-item {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-    }
-    
-    .legend-color {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
-      margin-right: 8px;
-    }
-    
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #7f8c8d;
-      font-size: 12px;
-    }
-    
-    .instructions {
-      text-align: center;
-      margin: 15px 0;
-      font-style: italic;
-      color: #7f8c8d;
-    }
-
-    .node circle {
-      fill: #fff;
-      stroke-width: 2px;
-    }
-
-    .node text {
-      font: 12px sans-serif;
-    }
-
-    .link {
-      fill: none;
-      stroke-width: 2px;
-    }
-
-    .tooltip {
-      position: absolute;
-      padding: 10px;
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-      max-width: 300px;
-      font-size: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-    
-    .controls {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 10;
-    }
-    
-    .controls button {
-      padding: 5px 10px;
-      margin-right: 5px;
-      background-color: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .controls button:hover {
-      background-color: #e9ecef;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>California Agricultural Land Equity Task Force</h1>
-    <h2>Coachella Valley Listening Session: Findings & Synthesis</h2>
-    
-    <div class="instructions">
-      <p>Click on nodes to expand/collapse. Drag the diagram to reposition. Hover over nodes for more details.</p>
-    </div>
-    
-    <div id="mind-map">
-      <div class="controls">
-        <button id="expand-all">Expand All</button>
-        <button id="collapse-all">Collapse All</button>
-      </div>
-    </div>
-    
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #3498db;"></div>
-        <span>Group 1 Concerns</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #2ecc71;"></div>
-        <span>Group 2 Concerns</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #e74c3c;"></div>
-        <span>Group 3 Concerns</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #f39c12;"></div>
-        <span>Common Challenges</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #9b59b6;"></div>
-        <span>Integrated Solutions</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #34495e;"></div>
-        <span>Proposed State Actions</span>
-      </div>
-    </div>
-    
-    <footer>
-      Source: California Land Equity Task Force - Coachella Valley Listening Session, February 2025
-    </footer>
-  </div>
-
-  <!-- D3.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-  <script>
-    // Mind map data structure
-    const data = {
-      name: "Coachella Valley Listening Session",
-      color: "#34495e",
-      details: "Findings from the California Land Equity Task Force with agricultural communities including migrant farmworkers, tenant farmers, small farmers, and huerto operators",
-      children: [
-        {
-          name: "Group 1 Concerns",
-          color: "#3498db",
-          details: "Distinct challenges identified by Group 1 participants",
-          children: [
-            { 
-              name: "Land Tenure Insecurity", 
-              color: "#3498db",
-              details: "USDA doesn't help renters, landlord restrictions on harvesting and business activities, concerns about succession - no one to leave land to" 
-            },
-            { 
-              name: "Certification Challenges", 
-              color: "#3498db",
-              details: "Different food safety certifications needed depending on the buyer (Costco, Winco, etc.), need for guidance navigating certification requirements"
-            },
-            { 
-              name: "Labor Management", 
-              color: "#3498db",
-              details: "Trust issues with workers (mentioned lawsuits), need more time to dedicate to crops, too many political issues with hiring"
-            },
-            { 
-              name: "Agricultural Losses", 
-              color: "#3498db",
-              details: "Lost 100 acres of green beans, lost significant moringa crops, climate and temperature limitations in Coachella restrict what they can grow"
-            },
-            { 
-              name: "Community Resources", 
-              color: "#3498db",
-              details: "Interest in creating a community nursery in a parking lot for 12 trailers, interest in forming a union for mutual support"
-            },
-            { 
-              name: "Financial Support Needs", 
-              color: "#3498db",
-              details: "Working with large companies isn't profitable due to low payments, need practical help beyond talk, more help for machinery and equipment"
-            }
-          ]
-        },
-        {
-          name: "Group 2 Concerns",
-          color: "#2ecc71",
-          details: "Distinct challenges identified by Group 2 participants",
-          children: [
-            { 
-              name: "Land & Huertos", 
-              color: "#2ecc71",
-              details: "Various herbs for home remedies, vegetables, fruits in gardens. Blueberries, grapefruits, citrus, strawberries, and pomegranates common. Natural pest management strategies important."
-            },
-            { 
-              name: "Intermediaries & Pricing", 
-              color: "#2ecc71",
-              details: "Complaints that LA wholesalers undercut prices of their produce. Rate this market access over land access given how they prefer to rent due to potential water & property tax costs from land ownership."
-            },
-            { 
-              name: "Youth & Education", 
-              color: "#2ecc71",
-              details: "Agricultural skills learned through family rather than formal education. Strong interest in schools teaching agricultural skills and business concepts."
-            },
-            { 
-              name: "Cooperative Models", 
-              color: "#2ecc71",
-              details: "Mixed experiences with cooperative farming, challenges with water access and distribution in cooperatives, preference for starting small before cooperatives."
-            },
-            { 
-              name: "Government Support", 
-              color: "#2ecc71",
-              details: "Concerns about restrictive regulations especially regarding pest management, preference for natural methods, desire for programs that understand small-scale operations."
-            },
-            { 
-              name: "Infrastructure Issues", 
-              color: "#2ecc71",
-              details: "Complaints about not being allowed to build cold storage due to zoning regulations, need for more help with huerto commercialization."
-            }
-          ]
-        },
-        {
-          name: "Group 3 Concerns",
-          color: "#e74c3c",
-          details: "Distinct challenges identified by Group 3 participants",
-          children: [
-            { 
-              name: "Business Growth", 
-              color: "#e74c3c",
-              details: "Goals to make a stable living for families, grow their businesses, provide quality food to surrounding communities"
-            },
-            { 
-              name: "Tools & Materials Cost", 
-              color: "#e74c3c",
-              details: "High costs of materials, particularly chemicals. Specialized tools aren't readily available like construction tools."
-            },
-            { 
-              name: "Pricing Issues", 
-              color: "#e74c3c",
-              details: "Large corporations buy at very low prices and resell at higher prices; farmers do all the work but corporations reap the benefits."
-            },
-            { 
-              name: "Financial Barriers", 
-              color: "#e74c3c",
-              details: "Unfavorable or nonexistent loans, costly requirements they aren't always aware of, need for better loans with favorable terms."
-            },
-            { 
-              name: "Information Access", 
-              color: "#e74c3c",
-              details: "Lack of centralized information, need for continuous outreach when policies change, centralized access to information and tools."
-            },
-            { 
-              name: "Cooperative Support", 
-              color: "#e74c3c",
-              details: "Need for a cooperative to support smaller farmers with resources, information, and tools in a changing agricultural landscape."
-            }
-          ]
-        },
-        {
-          name: "Common Challenges",
-          color: "#f39c12",
-          details: "Challenges shared across all three groups during the listening session",
-          children: [
-            { 
-              name: "Market Access & Fair Pricing", 
-              color: "#f39c12",
-              details: "Los Angeles wholesalers undercutting producers, difficulty securing fair prices, limited market connections, better market access prioritized over land ownership."
-            },
-            { 
-              name: "Insurance & Climate Vulnerability", 
-              color: "#f39c12",
-              details: "Significant crop losses due to extreme weather events, inadequate insurance options for small producers, climate impacts on production."
-            },
-            { 
-              name: "Financial & Regulatory Complexity", 
-              color: "#f39c12",
-              details: "Frustration with navigating complex regulatory environments not designed for small-scale operations, need for centralized information resources. Also lack of favorable loans avaiable to these participants, particularly those who often do not meet mainstream industry criteria."
-            },
-            { 
-              name: "Water Affordability & Land Tenure", 
-              color: "#f39c12",
-              details: "High water costs impact viability of land ownership, water expenses fundamentally shape agricultural decision-making in the region. Renting also limits access to government assistance."
-            },
-            { 
-              name: "Educational Improvement", 
-              color: "#f39c12",
-              details: "Desire for improved agricultural education that presents diverse career pathways beyond manual labor, concern about intergenerational mobility."
-            }
-          ]
-        },
-        {
-          name: "Community-Proposed Integrated Solutions",
-          color: "#9b59b6",
-          details: "Comprehensive solutions designed to address both common and group-specific challenges",
-          children: [
-            {
-              name: "Tiered Support Systems",
-              color: "#9b59b6",
-              details: "Support programs for various stages of agricultural development: from subsistence huertos to growth-oriented small businesses",
-              children: [
-                { 
-                  name: "Entry-level support for home gardens", 
-                  color: "#9b59b6", 
-                  details: "Programs and resources for household-scale agricultural production"
-                },
-                { 
-                  name: "Intermediate assistance for small plot operations", 
-                  color: "#9b59b6",
-                  details: "Support for farmers transitioning from subsistence to commercial production" 
-                },
-                { 
-                  name: "Advanced resources for expanding operations", 
-                  color: "#9b59b6",
-                  details: "Technical and financial resources for growing agricultural enterprises"
-                },
-                { 
-                  name: "Progressive pathways respecting aspirations", 
-                  color: "#9b59b6",
-                  details: "Creating pathways for progression while respecting different goals and aspirations"
-                }
-              ]
-            },
-            {
-              name: "Cooperative Models with Clear Governance",
-              color: "#9b59b6",
-              details: "Addressing challenges in collective approaches with transparent structures and public oversight",
-              children: [
-                { 
-                  name: "Clear governance protocols", 
-                  color: "#9b59b6",
-                  details: "Establishing clear procedures for cooperative decision-making"  
-                },
-                { 
-                  name: "Transparent decision-making", 
-                  color: "#9b59b6",
-                  details: "Open and clear processes for collective decisions"  
-                },
-                { 
-                  name: "Equitable resource allocation", 
-                  color: "#9b59b6",
-                  details: "Fair distribution of resources among cooperative members"  
-                },
-                { 
-                  name: "Incremental trust-building", 
-                  color: "#9b59b6",
-                  details: "Starting with small-scale collaborations to build trust over time"  
-                }
-              ]
-            },
-            {
-              name: "Comprehensive Educational Strategy",
-              color: "#9b59b6",
-              details: "Transforming agricultural education to integrate multiple visions across groups",
-              children: [
-                { 
-                  name: "Traditional knowledge transmission", 
-                  color: "#9b59b6",
-                  details: "Honoring and preserving traditional agricultural practices"  
-                },
-                { 
-                  name: "Technical and professional pathways", 
-                  color: "#9b59b6",
-                  details: "Building pathways to technical and professional roles in agriculture"  
-                },
-                { 
-                  name: "Multi-level educational programs", 
-                  color: "#9b59b6",
-                  details: "Programs spanning from basic skills to advanced technical knowledge"  
-                },
-                { 
-                  name: "Diverse career options", 
-                  color: "#9b59b6",
-                  details: "Presenting diverse options while honoring traditional practices"  
-                }
-              ]
-            },
-            {
-              name: "Multi-Level Market Development",
-              color: "#9b59b6",
-              details: "Different scales of production require varied market access solutions",
-              children: [
-                { 
-                  name: "Local farmers' markets", 
-                  color: "#9b59b6",
-                  details: "Direct consumer sales opportunities for small producers"  
-                },
-                { 
-                  name: "Aggregation systems", 
-                  color: "#9b59b6",
-                  details: "Systems giving medium-sized operations better negotiating power"  
-                },
-                { 
-                  name: "Digital platforms", 
-                  color: "#9b59b6",
-                  details: "Technologies connecting producers to appropriate buyers"  
-                },
-                { 
-                  name: "Price transparency mechanisms", 
-                  color: "#9b59b6",
-                  details: "Systems addressing concerns about wholesalers undercutting prices"  
-                }
-              ]
-            },
-            {
-              name: "Integrated Regulatory Navigation",
-              color: "#9b59b6",
-              details: "Coordinated assistance programs to help navigate complex requirements",
-              children: [
-                { 
-                  name: "Personalized guidance", 
-                  color: "#9b59b6",
-                  details: "Individualized help through regulatory processes"  
-                },
-                { 
-                  name: "Centralized information access", 
-                  color: "#9b59b6",
-                  details: "Single source for regulatory information across agencies"  
-                },
-                { 
-                  name: "Multilingual materials", 
-                  color: "#9b59b6",
-                  details: "Resources in multiple languages for diverse communities"  
-                },
-                { 
-                  name: "Simplified pathways", 
-                  color: "#9b59b6",
-                  details: "Streamlined processes for small-scale producers while maintaining standards"  
-                }
-              ]
-            },
-            {
-              name: "Participatory Governance Structure",
-              color: "#9b59b6",
-              details: "Ensuring meaningful inclusion in decision-making across all groups",
-              children: [
-                { 
-                  name: "Institutionalized community participation", 
-                  color: "#9b59b6",
-                  details: "Formalized ongoing community input beyond initial consultations"  
-                },
-                { 
-                  name: "Transparent implementation reporting", 
-                  color: "#9b59b6",
-                  details: "Clear reporting on progress and outcomes of initiatives"  
-                },
-                { 
-                  name: "Regular community forums", 
-                  color: "#9b59b6",
-                  details: "Ongoing dialog with community members & respective organizations"  
-                },
-                { 
-                  name: "Diverse representation", 
-                  color: "#9b59b6",
-                  details: "Ensuring governance represents the full spectrum of agricultural operations"  
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: "Participant-Proposed State Actions",
-          color: "#34495e",
-          details: "Specific policy and program recommendations for government agencies",
-          children: [
-            { 
-              name: "Publicly-Funded Local Food Hubs", 
-              color: "#34495e",
-              details: "State government establishing publicly-funded local food hubs to address market access challenges" 
-            },
-            { 
-              name: "Rural Zoning Code Reform", 
-              color: "#34495e",
-              details: "State and county governments reforming publicly-administered rural zoning codes to remove infrastructure barriers"
-            },
-            { 
-              name: "Public Disaster Insurance Expansion", 
-              color: "#34495e",
-              details: "State legislature mandating expanded public disaster insurance accessibility for small and tenant farmers"
-            },
-            { 
-              name: "State-Funded Huerto Development Program", 
-              color: "#34495e",
-              details: "State government establishing a program to support home gardens and provide pathways to commercialization"
-            },
-            { 
-              name: "Public Agricultural Loan Programs", 
-              color: "#34495e",
-              details: "State financial agencies implementing publicly-administered loan programs designed for small farmers"
-            },
-            { 
-              name: "K-12 Agricultural Curriculum Reform", 
-              color: "#34495e",
-              details: "Diversifying agricultural career exposure & education in public school curriculum. Offering insights of agronomy, engineering, & business sides of agriculture for children."
-            },
-            { 
-              name: "Publicly-Staffed Navigator Program", 
-              color: "#34495e",
-              details: "State agricultural departments creating navigator programs to help with regulatory complexity"
-            },
-            { 
-              name: "Community Water Systems Support", 
-              color: "#34495e",
-              details: "State water boards establishing publicly-supported community water systems with democratic governance"
-            },
-            { 
-              name: "Cooperative Distribution Networks", 
-              color: "#34495e",
-              details: "State support for publicly-backed cooperative distribution networks to overcome market access barriers"
-            }
-          ]
-        }
-      ]
-    };
-
-    // Set up the visualization dimensions
-    const width = document.getElementById('mind-map').clientWidth;
-    const height = document.getElementById('mind-map').clientHeight;
-    const margin = {top: 20, right: 120, bottom: 20, left: 120};
-    
-    // Create the SVG container
-    const svg = d3.select('#mind-map')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-    
-    const g = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${margin.top})`);
-    
-    // Add zoom behavior
-    const zoom = d3.zoom()
-      .scaleExtent([0.5, 2])
-      .on('zoom', (event) => {
-        g.attr('transform', event.transform);
-      });
-      
-    svg.call(zoom);
-    
-    // Create tooltip div
-    const tooltip = d3.select('body').append('div')
-      .attr('class', 'tooltip');
-    
-    // Create a hierarchical layout
-    const tree = d3.tree()
-      .size([height - margin.top - margin.bottom, width - margin.left - margin.right - 200]);
-    
-    // Create the root node
-    let root = d3.hierarchy(data);
-    
-    // Initialize counter for node IDs
-    let nodeIdCounter = 0;
-    
-    // Assign IDs to nodes for tracking and store original data
-    root.descendants().forEach(d => {
-      d.id = nodeIdCounter++;
-      // Store original data to be able to reconstruct the tree later
-      d.data.originalChildren = d.data.children ? [...d.data.children] : null;
-    });
-    
-    // Initial positioning
-    root.x0 = height / 2;
-    root.y0 = 0;
-    
-    // Collapse all children initially except main categories
-    root.children.forEach(collapse);
-    
-    // Function to collapse nodes
-    function collapse(d) {
-      if (d.children) {
-        d._children = d.children;
-        d._children.forEach(collapse);
-        d.children = null;
-      }
-    }
-    
-    // Update the tree visualization
-    update(root);
-    
-    // Function to update the visualization
-    function update(source) {
-      // Compute the new tree layout
-      const treeData = tree(root);
-      
-      // Get all nodes and links
-      const nodes = treeData.descendants();
-      const links = treeData.links();
-      
-      // Normalize for fixed-depth
-      nodes.forEach(d => {
-        d.y = d.depth * 180; // Horizontal spacing
-      });
-      
-      // **************** Nodes section ****************
-      
-      // Update the nodes
-      const node = g.selectAll('g.node')
-        .data(nodes, d => d.id);
-      
-      // Enter new nodes
-      const nodeEnter = node.enter().append('g')
-        .attr('class', 'node')
-        .attr('transform', d => `translate(${source.y0}, ${source.x0})`)
-        .on('click', (event, d) => {
-          // Toggle children on click
-          if (d.children) {
-            d._children = d.children;
-            d.children = null;
-          } else {
-            d.children = d._children;
-            d._children = null;
-          }
-          update(d);
-        })
-        .on('mouseover', (event, d) => {
-          tooltip.transition()
-            .duration(200)
-            .style('opacity', .9);
-          tooltip.html(`<strong>${d.data.name}</strong><br>${d.data.details}`)
-            .style('left', (event.pageX + 10) + 'px')
-            .style('top', (event.pageY - 28) + 'px');
-        })
-        .on('mouseout', () => {
-          tooltip.transition()
-            .duration(500)
-            .style('opacity', 0);
-        });
-      
-      // Add circles to the nodes
-      nodeEnter.append('circle')
-        .attr('r', 1e-6)
-        .style('fill', d => d._children ? d.data.color : '#fff')
-        .style('stroke', d => d.data.color);
-      
-      // Add labels to the nodes
-      nodeEnter.append('text')
-        .attr('dy', '.35em')
-        .attr('x', d => d.children || d._children ? -13 : 13)
-        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
-        .text(d => d.data.name)
-        .style('fill-opacity', 1e-6);
-      
-      // Update existing nodes
-      const nodeUpdate = nodeEnter.merge(node);
-      
-      // Transition nodes to their new position
-      nodeUpdate.transition()
-        .duration(750)
-        .attr('transform', d => `translate(${d.y}, ${d.x})`);
-      
-      // Update node attributes and style
-      nodeUpdate.select('circle')
-        .attr('r', d => d.depth === 0 ? 10 : 6)
-        .style('fill', d => d._children ? d.data.color : '#fff')
-        .style('stroke', d => d.data.color)
-        .attr('cursor', 'pointer');
-      
-      nodeUpdate.select('text')
-        .style('fill-opacity', 1)
-        .attr('font-weight', d => d.depth <= 1 ? 'bold' : 'normal');
-      
-      // Remove exiting nodes
-      const nodeExit = node.exit().transition()
-        .duration(750)
-        .attr('transform', d => `translate(${source.y}, ${source.x})`)
-        .remove();
-      
-      // Reduce the node circles size to 0
-      nodeExit.select('circle')
-        .attr('r', 1e-6);
-      
-      // Fade out the text
-      nodeExit.select('text')
-        .style('fill-opacity', 1e-6);
-      
-      // **************** Links section ****************
-      
-      // Update the links
-      const link = g.selectAll('path.link')
-        .data(links, d => d.target.id);
-      
-      // Enter new links
-      const linkEnter = link.enter().insert('path', 'g')
-        .attr('class', 'link')
-        .attr('d', d => {
-          const o = {x: source.x0, y: source.y0};
-          return diagonal(o, o);
-        })
-        .style('stroke', d => d.target.data.color)
-        .style('opacity', 0.7);
-      
-      // Update existing links
-      const linkUpdate = linkEnter.merge(link);
-      
-      // Transition links to their new position
-      linkUpdate.transition()
-        .duration(750)
-        .attr('d', d => diagonal(d.source, d.target))
-        .style('stroke', d => d.target.data.color);
-      
-      // Remove exiting links
-      link.exit().transition()
-        .duration(750)
-        .attr('d', d => {
-          const o = {x: source.x, y: source.y};
-          return diagonal(o, o);
-        })
-        .remove();
-      
-      // Store the old positions for transition
-      nodes.forEach(d => {
-        d.x0 = d.x;
-        d.y0 = d.y;
-      });
-      
-      // Creates a curved (diagonal) path from parent to child nodes
-      function diagonal(s, d) {
-        return `M ${s.y} ${s.x}
-                C ${(s.y + d.y) / 2} ${s.x},
-                  ${(s.y + d.y) / 2} ${d.x},
-                  ${d.y} ${d.x}`;
-      }
-    }
-    
-    // Improved function to expand ALL nodes at ANY state
-    function expandAll() {
-      // Recursive function to expand all nodes
-      function expandRecursive(node) {
-        // Expand this node first if it has hidden children
-        if (node._children) {
-          node.children = node._children;
-          node._children = null;
+    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
         }
         
-        // Then expand all visible children recursively
-        if (node.children) {
-          node.children.forEach(expandRecursive);
+        #infoPanel {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            max-width: 380px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 99;
         }
-      }
-      
-      // Start from the root
-      expandRecursive(root);
-      
-      // Update the visualization
-      update(root);
-    }
-    
-    // Improved function to collapse ALL nodes at ANY state, except the root's immediate children
-    function collapseAll() {
-      // Recursive function to collapse all nodes
-      function collapseRecursive(node) {
-        // First collapse all children recursively
-        if (node.children) {
-          node.children.forEach(collapseRecursive);
-          
-          // If this is not an immediate child of root, collapse it
-          if (node.parent && node.parent !== root) {
-            node._children = node.children;
-            node.children = null;
-          }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
         }
-      }
-      
-      // Handle the immediate children of root separately
-      if (root.children) {
-        root.children.forEach(child => {
-          // First collapse all descendants recursively
-          if (child.children) {
-            child.children.forEach(collapseRecursive);
+        
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            margin-right: 10px;
+        }
+        
+        .legend-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid white;
+            box-shadow: 0 0 2px rgba(0,0,0,0.3);
+        }
+        
+        .node-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .warehouse-details {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .mind-map-branch {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        
+        .branch-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .branch-details {
+            font-size: 12px;
+            color: #555;
+            margin: 5px 0;
+        }
+        
+        #loadingDiv {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        #errorDiv {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: none;
+            max-width: 400px;
+        }
+        
+        .stats-section {
+            background: #e8f4f8;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        .warehouse-node-legend {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .tree-structure {
+            margin-left: 15px;
+            border-left: 2px solid #ddd;
+            padding-left: 10px;
+        }
+        
+        .tree-node {
+            margin: 5px 0;
+            position: relative;
+        }
+        
+        #controlPanel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+        
+        .control-button:hover {
+            background: #2980b9;
+        }
+        
+        .control-button.secondary {
+            background: #95a5a6;
+        }
+        
+        .control-button.secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .collapsed-indicator {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e74c3c;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            line-height: 16px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://js.arcgis.com/4.27/"></script>
+</head>
+<body>
+    <div id="controlPanel">
+        <button class="control-button" onclick="resetCacheAndReload()">Reset Cache & Reload</button>
+        <button class="control-button secondary" onclick="expandAll()">Expand All</button>
+        <button class="control-button secondary" onclick="collapseAll()">Collapse All</button>
+    </div>
+    <div id="viewDiv"></div>
+    <div id="loadingDiv">
+        <h3>Loading Network Map...</h3>
+        <p>Processing warehouse ownership data</p>
+    </div>
+    <div id="errorDiv">
+        <h3>Error Loading Data</h3>
+        <p id="errorMessage"></p>
+    </div>
+    <div id="infoPanel" style="display: none;">
+        <h3>Warehouse Ownership Network</h3>
+        <p><strong>Bloomington, CA</strong></p>
+        
+        <div class="stats-section" id="statsSection">
+            <!-- Stats will be populated dynamically -->
+        </div>
+        
+        <div class="legend">
+            <h4>Entity Types</h4>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #34495e;"></div>
+                <span>Central Hub (Bloomington)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #8B4513;"></div>
+                <span>Warehouse Property</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #2E86C1;"></div>
+                <span>Developer</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #E74C3C;"></div>
+                <span>Purchaser/Owner</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #F39C12;"></div>
+                <span>Leasee/Tenant</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle" style="background: #3498DB;"></div>
+                <span>City/Headquarters</span>
+            </div>
+        </div>
+        
+        <div class="warehouse-node-legend">
+            <h4>Connection Types</h4>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #8B4513; width: 4px;"></div>
+                <span>Contains Warehouse</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #2E86C1; width: 4px;"></div>
+                <span>Developed by</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #E74C3C; width: 4px;"></div>
+                <span>Purchased/Merged</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #F39C12; width: 3px;"></div>
+                <span>Leased to</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #27AE60; width: 2px; border-style: dashed;"></div>
+                <span>Headquartered in</span>
+            </div>
+        </div>
+        
+        <div class="node-info" id="nodeInfo">
+            <p>Click on nodes for details</p>
+        </div>
+    </div>
+
+    <script>
+        // GitHub repository URLs
+        const githubBaseUrl = "https://raw.githubusercontent.com/pluricalifornia/BloomingtonWarehouses/main/";
+        const csvUrl = githubBaseUrl + "data/WarehouseTracker.csv";
+        const geoJsonUrl = githubBaseUrl + "data/warehouses%20(1).geojson";
+        
+        // Cache management
+        let dataCache = {
+            csv: null,
+            geoJson: null,
+            timestamp: null
+        };
+        
+        // Helper function to convert hex to RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? [
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16)
+            ] : [128, 128, 128];
+        }
+        
+        // Helper function to convert hex to RGBA
+        function hexToRgba(hex, alpha) {
+            const rgb = hexToRgb(hex);
+            return [...rgb, alpha];
+        }
+        
+        // Global variables for expand/collapse functionality
+        let networkView = null;
+        let collapsedNodes = new Set();
+        let allNodes = {};
+        let allEdges = [];
+        let nodeLayer = null;
+        let edgeLayer = null;
+        let labelLayer = null;
+        
+        // Function to reset cache and reload
+        function resetCacheAndReload() {
+            dataCache = {
+                csv: null,
+                geoJson: null,
+                timestamp: null
+            };
+            console.log("Cache cleared. Reloading page...");
+            location.reload();
+        }
+        
+        // Function to expand all nodes
+        function expandAll() {
+            collapsedNodes.clear();
+            updateNetworkVisualization();
+        }
+        
+        // Function to collapse all nodes
+        function collapseAll() {
+            // Collapse all warehouse nodes
+            Object.entries(allNodes).forEach(([nodeId, node]) => {
+                if (node.type === 'warehouse') {
+                    collapsedNodes.add(nodeId);
+                }
+            });
+            updateNetworkVisualization();
+        }
+        
+        // Function to toggle node expansion (make it global)
+        window.toggleNodeExpansion = function(nodeId) {
+            if (collapsedNodes.has(nodeId)) {
+                collapsedNodes.delete(nodeId);
+            } else {
+                collapsedNodes.add(nodeId);
+            }
+            updateNetworkVisualization();
+        }
+        
+        // Function to check if a node should be visible
+        function isNodeVisible(nodeId, nodes, edges) {
+            const node = nodes[nodeId];
+            if (!node) return false;
             
-            // Then collapse this child's children
-            child._children = child.children;
-            child.children = null;
-          }
+            // Root node is always visible
+            if (node.type === 'root') return true;
+            
+            // Check if any ancestor is collapsed
+            const ancestors = getNodeAncestors(nodeId, edges);
+            for (const ancestorId of ancestors) {
+                if (collapsedNodes.has(ancestorId)) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        // Function to get all ancestors of a node
+        function getNodeAncestors(nodeId, edges) {
+            const ancestors = [];
+            let currentId = nodeId;
+            
+            while (currentId) {
+                const parentEdge = edges.find(e => e.to === currentId);
+                if (parentEdge) {
+                    ancestors.push(parentEdge.from);
+                    currentId = parentEdge.from;
+                } else {
+                    break;
+                }
+            }
+            
+            return ancestors;
+        }
+        
+        // Function to check if a node has children
+        function hasChildNodes(nodeId) {
+            return allEdges.some(edge => edge.from === nodeId);
+        }
+        
+        // Function to count direct children of a node
+        function countDirectChildren(nodeId) {
+            return allEdges.filter(edge => edge.from === nodeId).length;
+        }
+        
+        // Function to count collapsed children
+        function countCollapsedChildren(nodeId, nodes, edges) {
+            let count = 0;
+            const children = edges.filter(e => e.from === nodeId).map(e => e.to);
+            
+            children.forEach(childId => {
+                if (!isNodeVisible(childId, nodes, edges)) {
+                    count++;
+                }
+                // Recursively count collapsed grandchildren
+                count += countCollapsedChildren(childId, nodes, edges);
+            });
+            
+            return count;
+        }
+        
+        // Function to update network visualization based on collapsed state
+        function updateNetworkVisualization() {
+            if (!networkView || !nodeLayer || !edgeLayer || !labelLayer || !window.ArcGISModules) return;
+            
+            const { Point, Polyline, Graphic, SimpleMarkerSymbol, SimpleLineSymbol, TextSymbol } = window.ArcGISModules;
+            
+            // Clear existing graphics
+            nodeLayer.removeAll();
+            edgeLayer.removeAll();
+            labelLayer.removeAll();
+            
+            // Redraw edges (only visible ones)
+            allEdges.forEach(edge => {
+                const fromVisible = isNodeVisible(edge.from, allNodes, allEdges);
+                const toVisible = isNodeVisible(edge.to, allNodes, allEdges);
+                
+                if (fromVisible && toVisible) {
+                    const fromNode = allNodes[edge.from];
+                    const toNode = allNodes[edge.to];
+                    
+                    if (fromNode && toNode) {
+                        const polyline = new Polyline({
+                            paths: [[fromNode.coords, toNode.coords]],
+                            spatialReference: { wkid: 4326 }
+                        });
+                        
+                        let color, width, style;
+                        if (edge.type === "contains" && fromNode.type === "root") {
+                            color = [139, 69, 19, 0.8];
+                            width = 4;
+                            style = "solid";
+                        } else if (edge.type === "contains") {
+                            color = edge.color ? hexToRgba(edge.color, 0.6) : [149, 165, 166, 0.6];
+                            width = 2;
+                            style = "solid";
+                        } else if (edge.type === "developer") {
+                            color = [46, 134, 193, 0.8];
+                            width = 3;
+                            style = "solid";
+                        } else if (edge.type === "purchaser") {
+                            color = [231, 76, 60, 0.8];
+                            width = 3;
+                            style = "solid";
+                        } else if (edge.type === "leasee") {
+                            color = [243, 156, 18, 0.8];
+                            width = 3;
+                            style = "solid";
+                        } else {
+                            color = [149, 165, 166, 0.8];
+                            width = 2;
+                            style = "dash";
+                        }
+                        
+                        const lineSymbol = new SimpleLineSymbol({
+                            color: color,
+                            width: width,
+                            style: style
+                        });
+                        
+                        const graphic = new Graphic({
+                            geometry: polyline,
+                            symbol: lineSymbol,
+                            attributes: edge
+                        });
+                        
+                        edgeLayer.add(graphic);
+                    }
+                }
+            });
+            
+            // Redraw nodes (only visible ones)
+            Object.entries(allNodes).forEach(([nodeId, node]) => {
+                if (isNodeVisible(nodeId, allNodes, allEdges)) {
+                    const point = new Point({
+                        longitude: node.coords[0],
+                        latitude: node.coords[1],
+                        spatialReference: { wkid: 4326 }
+                    });
+                    
+                    let size = 10;
+                    let color = hexToRgb(node.color || "#999999");
+                    
+                    if (node.type === "root") {
+                        size = 24;
+                    } else if (node.type === "warehouse") {
+                        size = 16;
+                    } else if (node.type === "relationship") {
+                        size = 8;
+                    } else if (node.type === "entity") {
+                        size = 12 + Math.min(node.connections * 2, 8);
+                    }
+                    
+                    // Check if this node has collapsed children
+                    const collapsedChildCount = countCollapsedChildren(nodeId, allNodes, allEdges);
+                    const hasCollapsedChildren = collapsedNodes.has(nodeId) || collapsedChildCount > 0;
+                    
+                    const markerSymbol = new SimpleMarkerSymbol({
+                        color: color,
+                        size: size,
+                        outline: {
+                            color: hasCollapsedChildren ? [231, 76, 60] : [255, 255, 255],
+                            width: hasCollapsedChildren ? 3 : 2
+                        }
+                    });
+                    
+                    const graphic = new Graphic({
+                        geometry: point,
+                        symbol: markerSymbol,
+                        attributes: {
+                            ...node,
+                            nodeId: nodeId,
+                            collapsedChildCount: collapsedChildCount
+                        }
+                    });
+                    
+                    nodeLayer.add(graphic);
+                    
+                    // Add labels for important nodes
+                    if (node.type === "root" || node.type === "warehouse" || 
+                        (node.type === "entity" && node.connections > 0)) {
+                        let labelText = node.name;
+                        if (node.type === "warehouse") {
+                            labelText = node.id.length > 10 ? "WH" : node.id;
+                        }
+                        
+                        // Add collapsed indicator
+                        if (collapsedChildCount > 0) {
+                            labelText += ` (${collapsedChildCount})`;
+                        }
+                        
+                        const textSymbol = new TextSymbol({
+                            text: labelText,
+                            color: [0, 0, 0],
+                            haloColor: [255, 255, 255],
+                            haloSize: 2,
+                            font: {
+                                size: node.type === "root" ? 14 : 
+                                      (node.type === "warehouse" ? 9 : 10),
+                                weight: node.type === "root" ? "bold" : "normal"
+                            },
+                            yoffset: -15
+                        });
+                        
+                        const labelGraphic = new Graphic({
+                            geometry: point,
+                            symbol: textSymbol
+                        });
+                        
+                        labelLayer.add(labelGraphic);
+                    }
+                }
+            });
+        }
+        
+        // Function to ensure APN format consistency (pad with zeros if needed)
+        function normalizeAPN(apn) {
+            if (!apn) return apn;
+            
+            // Convert to string to handle any numeric values
+            let apnStr = String(apn).trim();
+            
+            // If it looks like a numeric APN (all digits), pad with zeros to 9 digits
+            if (/^\d+$/.test(apnStr) && apnStr.length < 9) {
+                apnStr = apnStr.padStart(9, '0');
+            }
+            
+            return apnStr;
+        }
+        
+        // Fallback embedded data for testing
+        const fallbackCsvData = `"Category","Assessor parcel number","Building classification","Year built/approved","Acres","Building sq.ft.",Developer,DevOriginCity,Purchaser/Merger,Category,Leasee,PurchaserOriginCity,LeaseeOriginCity,Endpoint
+"Approved","Bloomington Business Park","https://ceqanet.opr.ca.gov/2020120545/3","2025","181","4340000",Howard Industrial Partners LLC,"Lemon Heights, CA",TBD,TBD,TBD,TBD,TBD,"Bloomington, CA"
+"Existing","025217367","transit warehouse (truck terminal)","2001","47","1133000",Pacific Industrial,"Newport Beach, CA",Realterm,Purchase,YellowCorp,"Annapolis, MD",TBD,"Bloomington, CA"
+"Existing","Bloomington Logistics Center","distribution warehouse","2019","35","827000", Crow holdings Industrial, "Highland Park, TX", ASB Real Estate Investments,Purchase,TBD,"Bethseda, MD",TBD,"Bloomington, CA"
+"Existing","025215217","distribution warehouse","2018","28","674000", DCT Industrial Trust,"Evergreen, CO",Prologis,Merger,TBD,"Pacific Heights, CA",TBD,"Bloomington, CA"`;
+
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+            "esri/geometry/Point",
+            "esri/geometry/Polygon",
+            "esri/geometry/Polyline",
+            "esri/symbols/SimpleMarkerSymbol",
+            "esri/symbols/SimpleFillSymbol",
+            "esri/symbols/SimpleLineSymbol",
+            "esri/symbols/TextSymbol",
+            "esri/rest/locator",
+            "esri/widgets/Popup"
+        ], function(Map, MapView, Graphic, GraphicsLayer, Point, Polygon, Polyline, 
+                   SimpleMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol, locator, Popup) {
+
+            // Store modules globally for use outside require block
+            window.ArcGISModules = {
+                Point, Polyline, Graphic, SimpleMarkerSymbol, SimpleLineSymbol, TextSymbol
+            };
+
+            // Cache for geocoded locations
+            const geocodeCache = {};
+            
+            // Predefined coordinates for known cities
+            const cityCoords = {
+                "Bloomington, CA": [-117.396, 34.070],
+                "Lemon Heights, CA": [-117.823, 33.765],
+                "Newport Beach, CA": [-117.928, 33.618],
+                "Annapolis, MD": [-76.492, 38.978],
+                "Highland Park, TX": [-96.792, 32.834],
+                "Bethesda, MD": [-77.094, 38.984],
+                "Bethseda, MD": [-77.094, 38.984], // Handle typo
+                "Evergreen, CO": [-105.321, 39.633],
+                "Pacific Heights, CA": [-122.447, 37.794],
+                "San Francisco, CA": [-122.419, 37.774],
+                "Denver, CO": [-104.990, 39.739],
+                "Irvine, CA": [-117.826, 33.684],
+                "Costa Mesa, CA": [-117.919, 33.641]
+            };
+
+            // Function to get centroid of a polygon
+            function getPolygonCentroid(coordinates) {
+                let sumX = 0, sumY = 0, count = 0;
+                
+                // Handle MultiPolygon
+                if (coordinates.length > 0 && Array.isArray(coordinates[0][0][0])) {
+                    // It's a MultiPolygon
+                    coordinates.forEach(polygon => {
+                        polygon.forEach(ring => {
+                            ring.forEach(coord => {
+                                sumX += coord[0];
+                                sumY += coord[1];
+                                count++;
+                            });
+                        });
+                    });
+                } else {
+                    // It's a regular Polygon
+                    coordinates.forEach(ring => {
+                        ring.forEach(coord => {
+                            sumX += coord[0];
+                            sumY += coord[1];
+                            count++;
+                        });
+                    });
+                }
+                
+                return [sumX / count, sumY / count];
+            }
+
+            // Get warehouse position from GeoJSON or generate one
+            function getWarehousePositionFromGeoJson(apn, geoJsonByApn, index, total) {
+                // Try normalized APN first, then raw APN
+                const normalizedApn = normalizeAPN(apn);
+                const feature = geoJsonByApn[normalizedApn] || geoJsonByApn[apn];
+                
+                if (feature && feature.geometry) {
+                    return getPolygonCentroid(feature.geometry.coordinates);
+                }
+                
+                // Fallback to generated position if no GeoJSON match
+                const bloomingtonCoords = cityCoords["Bloomington, CA"];
+                const radius = 0.15;
+                const angle = (index / total) * 2 * Math.PI;
+                
+                return [
+                    bloomingtonCoords[0] + radius * Math.cos(angle),
+                    bloomingtonCoords[1] + radius * Math.sin(angle)
+                ];
+            }
+
+            // Geocoding function with US bounds checking
+            async function geocodeLocation(address) {
+                if (geocodeCache[address]) {
+                    return geocodeCache[address];
+                }
+                
+                if (cityCoords[address]) {
+                    geocodeCache[address] = cityCoords[address];
+                    return cityCoords[address];
+                }
+                
+                try {
+                    const geocodeUrl = "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+                    const result = await locator.addressToLocations(geocodeUrl, {
+                        address: {
+                            SingleLine: address
+                        },
+                        maxLocations: 1,
+                        countryCode: "USA" // Restrict to US
+                    });
+                    
+                    if (result && result.length > 0) {
+                        const coords = [result[0].location.longitude, result[0].location.latitude];
+                        
+                        // Check if coordinates are within reasonable US bounds
+                        // Continental US: roughly -125 to -66 longitude, 24 to 49 latitude
+                        // Alaska: roughly -180 to -130 longitude, 52 to 72 latitude  
+                        // Hawaii: roughly -161 to -154 longitude, 18 to 23 latitude
+                        const lon = coords[0];
+                        const lat = coords[1];
+                        
+                        const isInContinentalUS = lon >= -125 && lon <= -66 && lat >= 24 && lat <= 49;
+                        const isInAlaska = lon >= -180 && lon <= -130 && lat >= 52 && lat <= 72;
+                        const isInHawaii = lon >= -161 && lon <= -154 && lat >= 18 && lat <= 23;
+                        
+                        if (isInContinentalUS || isInAlaska || isInHawaii) {
+                            geocodeCache[address] = coords;
+                            return coords;
+                        } else {
+                            console.warn(`Location ${address} geocoded outside US bounds:`, coords);
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`Geocoding failed for ${address}:`, error);
+                }
+                
+                // Return null instead of random coordinates for invalid locations
+                return null;
+            }
+
+            // Function to get coordinates with offset for multiple entities
+            const entityOffsets = {};
+            async function getCoordinatesForEntity(location, entityName) {
+                if (!location) return null;
+                
+                const baseCoords = await geocodeLocation(location);
+                if (!baseCoords) return null;
+                
+                const key = location + "|" + entityName;
+                if (!entityOffsets[key]) {
+                    const count = Object.keys(entityOffsets).filter(k => k.startsWith(location)).length;
+                    const angle = (count * 72) * Math.PI / 180;
+                    const offset = 0.05;
+                    entityOffsets[key] = [
+                        baseCoords[0] + offset * Math.cos(angle),
+                        baseCoords[1] + offset * Math.sin(angle)
+                    ];
+                }
+                return entityOffsets[key];
+            }
+
+            // Helper functions for data cleaning
+            function cleanLocation(location) {
+                if (!location || typeof location !== 'string') return null;
+                
+                let cleaned = location.trim().replace(/["\\"]/g, '').trim();
+                
+                // Expanded list of invalid locations
+                const invalidLocations = ['TBD', 'TBA', 'N/A', 'CA', 'TX', 'FL', 'NY', 'AZ', 'CO', 'MD', 
+                    'Florida', 'Texas', 'California', 'Unknown', '', 'undefined', 'null'];
+                if (invalidLocations.includes(cleaned)) return null;
+                
+                // Check if it's just a state abbreviation (2 letters)
+                if (/^[A-Z]{2}$/.test(cleaned)) return null;
+                
+                if (cleaned === 'Bethseda, MD') cleaned = 'Bethesda, MD';
+                
+                const cityStateMap = {
+                    'Highland Park': 'Highland Park, TX',
+                    'Miami Beach': 'Miami Beach, FL'
+                };
+                
+                if (cityStateMap[cleaned]) {
+                    cleaned = cityStateMap[cleaned];
+                }
+                
+                return cleaned;
+            }
+            
+            function cleanEntityName(name) {
+                if (!name || typeof name !== 'string') return null;
+                
+                let cleaned = name.trim().replace(/["\\"]/g, '').trim();
+                
+                // Expanded list of invalid names - including transaction types
+                const invalidNames = ['TBD', 'TBA', 'N/A', 'Purchase', 'Merger', 'Acquisition', 
+                    'Joint Venture', 'Partnership', 'Category', '', 'undefined', 'null'];
+                if (invalidNames.includes(cleaned)) return null;
+                
+                // Check if it's just a state abbreviation
+                if (/^[A-Z]{2}$/.test(cleaned)) return null;
+                
+                return cleaned;
+            }
+
+            // Build mind map data structure
+            function buildMindMapData(parsedData, geoJsonByApn) {
+                const mindMapData = {
+                    name: "Bloomington, CA",
+                    color: "#34495e",
+                    details: "Central hub for warehouse development in San Bernardino County",
+                    type: "root",
+                    children: []
+                };
+
+                parsedData.forEach((row, index) => {
+                    const rawApn = row["Assessor parcel number"];
+                    const warehouseId = normalizeAPN(rawApn) || `Warehouse_${index}`;
+                    const developer = cleanEntityName(row.Developer);
+                    const purchaser = cleanEntityName(row["Purchaser/Merger"]);
+                    const leasee = cleanEntityName(row.Leasee);
+                    
+                    // Get additional data from GeoJSON if available
+                    // Try normalized APN first, then raw APN
+                    const geoJsonFeature = geoJsonByApn[warehouseId] || geoJsonByApn[rawApn];
+                    let buildingClass = row["Building classification"] || "Warehouse";
+                    let yearBuilt = row["Year built/approved"];
+                    let acres = row.Acres || 0;
+                    let sqft = row["Building sq.ft."] || 0;
+                    
+                    if (geoJsonFeature && geoJsonFeature.properties) {
+                        console.log(`Found GeoJSON match for ${warehouseId}`);
+                        buildingClass = geoJsonFeature.properties.class || buildingClass;
+                        yearBuilt = geoJsonFeature.properties.year_built || yearBuilt;
+                        if (geoJsonFeature.properties.shape_area) {
+                            // Convert shape_area to acres if needed (assuming it's in square feet)
+                            const calculatedAcres = (geoJsonFeature.properties.shape_area / 43560).toFixed(1);
+                            acres = acres || calculatedAcres;
+                        }
+                    } else {
+                        console.log(`No GeoJSON match found for ${warehouseId} (raw: ${rawApn})`);
+                    }
+                    
+                    const warehouseNode = {
+                        name: warehouseId,
+                        color: "#8B4513",
+                        details: `${buildingClass} - ${acres} acres, ${parseInt(sqft).toLocaleString()} sq.ft. (${yearBuilt})`,
+                        type: "warehouse",
+                        data: row,
+                        geoJsonFeature: geoJsonFeature,
+                        children: []
+                    };
+
+                    // Add developer branch
+                    if (developer) {
+                        const devOrigin = cleanLocation(row.DevOriginCity);
+                        // Only add if we have valid origin location
+                        if (devOrigin) {
+                            warehouseNode.children.push({
+                                name: "Developer",
+                                color: "#2E86C1",
+                                details: developer,
+                                type: "relationship",
+                                children: [
+                                    {
+                                        name: developer,
+                                        color: "#2E86C1",
+                                        details: `Headquarters: ${devOrigin}`,
+                                        type: "entity",
+                                        subtype: "developer",
+                                        origin: devOrigin
+                                    }
+                                ]
+                            });
+                        }
+                    }
+
+                    // Add purchaser branch
+                    if (purchaser) {
+                        const purchOrigin = cleanLocation(row.PurchaserOriginCity);
+                        // Validate transaction type
+                        const transactionType = row["Transaction Type"];
+                        const validTransactionTypes = ['Purchase', 'Merger', 'Acquisition', 'Joint Venture'];
+                        const cleanTransactionType = validTransactionTypes.includes(transactionType) ? transactionType : "Purchase";
+                        
+                        // Only add if we have valid origin location
+                        if (purchOrigin) {
+                            warehouseNode.children.push({
+                                name: "Purchaser/Owner",
+                                color: "#E74C3C",
+                                details: `${cleanTransactionType}: ${purchaser}`,
+                                type: "relationship",
+                                children: [
+                                    {
+                                        name: purchaser,
+                                        color: "#E74C3C",
+                                        details: `Headquarters: ${purchOrigin}`,
+                                        type: "entity",
+                                        subtype: "purchaser",
+                                        origin: purchOrigin
+                                    }
+                                ]
+                            });
+                        }
+                    }
+
+                    // Add leasee branch
+                    if (leasee) {
+                        const leaseeOrigin = cleanLocation(row.LeaseeOriginCity);
+                        // Only add if we have valid origin location
+                        if (leaseeOrigin) {
+                            warehouseNode.children.push({
+                                name: "Tenant",
+                                color: "#F39C12",
+                                details: `Leased to: ${leasee}`,
+                                type: "relationship",
+                                children: [
+                                    {
+                                        name: leasee,
+                                        color: "#F39C12",
+                                        details: `Headquarters: ${leaseeOrigin}`,
+                                        type: "entity",
+                                        subtype: "leasee",
+                                        origin: leaseeOrigin
+                                    }
+                                ]
+                            });
+                        }
+                    }
+
+                    mindMapData.children.push(warehouseNode);
+                });
+
+                return mindMapData;
+            }
+
+            // Convert mind map structure to nodes and edges for visualization
+            async function convertMindMapToNetwork(mindMapData, geoJsonByApn) {
+                const nodes = {};
+                const edges = [];
+                const nodeQueue = [{node: mindMapData, parent: null, level: 0}];
+                
+                while (nodeQueue.length > 0) {
+                    const {node, parent, level} = nodeQueue.shift();
+                    let nodeId = node.name;
+                    
+                    if (nodes[nodeId]) {
+                        nodeId = `${node.name}_${Object.keys(nodes).filter(k => k.startsWith(node.name)).length}`;
+                    }
+                    
+                    let coords;
+                    if (node.type === "root") {
+                        coords = await geocodeLocation(node.name);
+                    } else if (node.type === "warehouse") {
+                        const warehouseIndex = mindMapData.children.indexOf(node);
+                        const apn = node.name;
+                        coords = getWarehousePositionFromGeoJson(apn, geoJsonByApn, warehouseIndex, mindMapData.children.length);
+                    } else if (node.type === "entity" && node.origin) {
+                        coords = await getCoordinatesForEntity(node.origin, node.name);
+                        // Skip this node if we couldn't get valid coordinates
+                        if (!coords) {
+                            console.warn(`Skipping entity node ${node.name} - no valid coordinates for ${node.origin}`);
+                            continue;
+                        }
+                    } else {
+                        const parentCoords = parent ? nodes[parent].coords : [0, 0];
+                        const offset = 0.05 * (level - 1);
+                        const angle = Math.random() * 2 * Math.PI;
+                        coords = [
+                            parentCoords[0] + offset * Math.cos(angle),
+                            parentCoords[1] + offset * Math.sin(angle)
+                        ];
+                    }
+                    
+                    nodes[nodeId] = {
+                        id: nodeId,
+                        name: node.name,
+                        type: node.type,
+                        subtype: node.subtype,
+                        color: node.color,
+                        details: node.details,
+                        coords: coords,
+                        level: level,
+                        data: node.data,
+                        geoJsonFeature: node.geoJsonFeature,
+                        connections: 0
+                    };
+                    
+                    if (parent) {
+                        edges.push({
+                            from: parent,
+                            to: nodeId,
+                            type: node.type === "relationship" ? "contains" : node.subtype || "relationship",
+                            color: node.color,
+                            level: level
+                        });
+                    }
+                    
+                    if (node.children) {
+                        node.children.forEach(child => {
+                            nodeQueue.push({node: child, parent: nodeId, level: level + 1});
+                        });
+                    }
+                }
+                
+                edges.forEach(edge => {
+                    if (nodes[edge.from]) nodes[edge.from].connections++;
+                    if (nodes[edge.to]) nodes[edge.to].connections++;
+                });
+                
+                return {nodes, edges};
+            }
+
+            // Load and parse CSV data
+            async function loadData() {
+                try {
+                    let csvText = fallbackCsvData;
+                    let geoJsonData = null;
+                    
+                    // Try to load CSV from GitHub
+                    try {
+                        console.log("Loading CSV from GitHub...");
+                        const csvResponse = await fetch(csvUrl);
+                        if (csvResponse.ok) {
+                            csvText = await csvResponse.text();
+                            console.log("Successfully loaded CSV from GitHub");
+                        } else {
+                            console.warn("Failed to load CSV from GitHub, using fallback data");
+                        }
+                    } catch (error) {
+                        console.warn("Error loading CSV from GitHub:", error);
+                    }
+                    
+                    // Try to load GeoJSON from GitHub
+                    try {
+                        console.log("Loading GeoJSON from GitHub...");
+                        const geoJsonResponse = await fetch(geoJsonUrl);
+                        if (geoJsonResponse.ok) {
+                            geoJsonData = await geoJsonResponse.json();
+                            console.log("Successfully loaded GeoJSON from GitHub, features:", geoJsonData.features.length);
+                        } else {
+                            console.warn("Failed to load GeoJSON from GitHub");
+                        }
+                    } catch (error) {
+                        console.warn("Error loading GeoJSON from GitHub:", error);
+                    }
+                    
+                    // Process GeoJSON data
+                    const geoJsonByApn = {};
+                    if (geoJsonData && geoJsonData.features) {
+                        geoJsonData.features.forEach(feature => {
+                            if (feature.properties && feature.properties.apn) {
+                                const normalizedApn = normalizeAPN(feature.properties.apn);
+                                geoJsonByApn[normalizedApn] = feature;
+                                // Also store with original APN in case
+                                geoJsonByApn[feature.properties.apn] = feature;
+                            }
+                        });
+                        console.log("Indexed GeoJSON features by APN:", Object.keys(geoJsonByApn));
+                    }
+                    
+                    // Fix CSV header
+                    const lines = csvText.split('\n');
+                    const fixedHeader = "Category,Assessor parcel number,Building classification,Year built/approved,Acres,Building sq.ft.,Developer,DevOriginCity,Purchaser/Merger,Transaction Type,Leasee,PurchaserOriginCity,LeaseeOriginCity,Endpoint";
+                    lines[0] = fixedHeader;
+                    const fixedCsv = lines.join('\n');
+                    
+                    const parsed = Papa.parse(fixedCsv, {
+                        header: true,
+                        dynamicTyping: function (header) {
+                            // Don't dynamically type the APN field to preserve leading zeros
+                            if (header === "Assessor parcel number") {
+                                return false;
+                            }
+                            return true;
+                        },
+                        skipEmptyLines: true
+                    });
+
+                    const mindMapData = buildMindMapData(parsed.data, geoJsonByApn);
+                    const {nodes, edges} = await convertMindMapToNetwork(mindMapData, geoJsonByApn);
+                    
+                    const warehouses = Object.values(nodes).filter(n => n.type === 'warehouse');
+                    const stats = {
+                        totalWarehouses: warehouses.length,
+                        totalAcres: warehouses.reduce((sum, w) => sum + (w.data?.Acres || 0), 0),
+                        totalSqft: warehouses.reduce((sum, w) => sum + (w.data?.["Building sq.ft."] || 0), 0),
+                        developers: Object.values(nodes).filter(n => n.subtype === 'developer').length,
+                        purchasers: Object.values(nodes).filter(n => n.subtype === 'purchaser').length,
+                        leasees: Object.values(nodes).filter(n => n.subtype === 'leasee').length,
+                        geoJsonFeatures: Object.keys(geoJsonByApn).length
+                    };
+
+                    console.log("Data processing complete. Nodes:", Object.keys(nodes).length, "Edges:", edges.length, "GeoJSON features:", stats.geoJsonFeatures);
+                    return { nodes, edges, mindMapData, stats, geoJsonByApn };
+                } catch (error) {
+                    console.error("Error loading data:", error);
+                    throw error;
+                }
+            }
+
+            // Initialize map and create network
+            async function initializeMap() {
+                try {
+                    const map = new Map({
+                        basemap: "gray-vector"
+                    });
+
+                    const view = new MapView({
+                        container: "viewDiv",
+                        map: map,
+                        center: [-117.396, 34.070],
+                        zoom: 11
+                    });
+                    
+                    // Store view reference globally
+                    networkView = view;
+
+                    const warehouseLayer = new GraphicsLayer({ title: "Warehouse Footprints" });
+                    edgeLayer = new GraphicsLayer({ title: "Connections" });
+                    nodeLayer = new GraphicsLayer({ title: "Entities" });
+                    labelLayer = new GraphicsLayer({ title: "Labels" });
+                    
+                    map.addMany([warehouseLayer, edgeLayer, nodeLayer, labelLayer]);
+
+                    await view.when();
+
+                    const { nodes, edges, mindMapData, stats, geoJsonByApn } = await loadData();
+                    
+                    // Store nodes and edges globally for expand/collapse functionality
+                    allNodes = nodes;
+                    allEdges = edges;
+                    
+                    // Update statistics panel
+                    document.getElementById("statsSection").innerHTML = `
+                        <div><strong>${stats.totalWarehouses}</strong> Warehouse Properties</div>
+                        <div><strong>${stats.totalAcres.toLocaleString()}</strong> Total Acres</div>
+                        <div><strong>${(stats.totalSqft / 1000000).toFixed(1)}M</strong> Total Sq.Ft.</div>
+                        <div style="margin-top: 5px;">
+                            <strong>${stats.developers}</strong> Developers • 
+                            <strong>${stats.purchasers}</strong> Purchasers • 
+                            <strong>${stats.leasees}</strong> Leasees
+                        </div>
+                        <div style="margin-top: 5px; font-size: 11px; color: #666;">
+                            <strong>${stats.geoJsonFeatures}</strong> warehouse footprints loaded
+                        </div>
+                    `;
+                    
+                    // Add warehouse footprints from GeoJSON
+                    console.log("Adding warehouse footprints...");
+                    let footprintCount = 0;
+                    Object.entries(geoJsonByApn).forEach(([apn, feature]) => {
+                        if (feature.geometry && (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon')) {
+                            try {
+                                let rings;
+                                if (feature.geometry.type === 'MultiPolygon') {
+                                    // For MultiPolygon, flatten all polygons
+                                    rings = [];
+                                    feature.geometry.coordinates.forEach(polygon => {
+                                        rings.push(...polygon);
+                                    });
+                                } else {
+                                    rings = feature.geometry.coordinates;
+                                }
+                                
+                                const polygon = new Polygon({
+                                    rings: rings,
+                                    spatialReference: { wkid: 4326 }
+                                });
+                                
+                                const fillSymbol = new SimpleFillSymbol({
+                                    color: [139, 69, 19, 0.3], // Brown with transparency
+                                    outline: {
+                                        color: [139, 69, 19],
+                                        width: 2
+                                    }
+                                });
+                                
+                                const polygonGraphic = new Graphic({
+                                    geometry: polygon,
+                                    symbol: fillSymbol,
+                                    attributes: {
+                                        apn: apn,
+                                        warehouseData: feature.properties,
+                                        type: 'warehousePolygon'
+                                    }
+                                });
+                                
+                                warehouseLayer.add(polygonGraphic);
+                                footprintCount++;
+                            } catch (error) {
+                                console.error(`Error adding polygon for APN ${apn}:`, error);
+                            }
+                        }
+                    });
+                    console.log(`Added ${footprintCount} warehouse footprints`);
+                    
+                    // Use updateNetworkVisualization instead of inline drawing
+                    updateNetworkVisualization();
+                    
+                    // Hide loading and show info panel
+                    document.getElementById("loadingDiv").style.display = "none";
+                    document.getElementById("infoPanel").style.display = "block";
+                    
+                    // Update extent to show all graphics
+                    if (nodeLayer.graphics.length > 0) {
+                        view.goTo(nodeLayer.graphics.concat(edgeLayer.graphics).concat(warehouseLayer.graphics), {
+                            padding: { top: 50, bottom: 50, left: 50, right: 400 }
+                        });
+                        // Store references globally for updateNetworkVisualization (already done at top)
+                    }
+                    
+                    // Handle click events
+                    view.on("click", function(event) {
+                        view.hitTest(event).then(function(response) {
+                            const graphic = response.results[0]?.graphic;
+                            if (graphic && graphic.attributes) {
+                                const attrs = graphic.attributes;
+                                
+                                // Check if this is a node click (not warehouse polygon)
+                                if (attrs.nodeId && (attrs.type === 'warehouse' || attrs.type === 'root' || 
+                                    (attrs.type === 'entity' && hasChildNodes(attrs.nodeId)))) {
+                                    
+                                    // Check if shift key is held for info display
+                                    if (event.native.shiftKey) {
+                                        // Show info panel
+                                        displayNodeInfo(attrs, mindMapData);
+                                    } else {
+                                        // Toggle expansion on direct click
+                                        const childCount = countDirectChildren(attrs.nodeId);
+                                        if (childCount > 0) {
+                                            window.toggleNodeExpansion(attrs.nodeId);
+                                        } else {
+                                            // If no children, show info
+                                            displayNodeInfo(attrs, mindMapData);
+                                        }
+                                    }
+                                } else {
+                                    // For non-expandable nodes or polygons, show info
+                                    displayNodeInfo(attrs, mindMapData);
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Function to display node information
+                    function displayNodeInfo(attrs, mindMapData) {
+                        let infoHtml = "";
+                        let currentNodeId = attrs.nodeId || attrs.id || attrs.name;
+                                
+                                if (attrs.type === "root") {
+                                    infoHtml = `<h4>${attrs.name}</h4>`;
+                                    infoHtml += `<div class="warehouse-details">${attrs.details}</div>`;
+                                    infoHtml += `<p><strong>Total Warehouses:</strong> ${mindMapData.children.length}</p>`;
+                                    currentNodeId = attrs.id || "Bloomington, CA";
+                                    
+                                } else if (attrs.type === "warehouse") {
+                                    const warehouseData = attrs.data;
+                                    infoHtml = `<h4>Warehouse: ${attrs.id}</h4>`;
+                                    infoHtml += `<div class="warehouse-details">`;
+                                    infoHtml += `<div>${attrs.details}</div>`;
+                                    
+                                    // Add GeoJSON-based info if available
+                                    if (attrs.geoJsonFeature && attrs.geoJsonFeature.properties) {
+                                        const props = attrs.geoJsonFeature.properties;
+                                        if (props.shape_area) {
+                                            infoHtml += `<div><strong>Area:</strong> ${(props.shape_area / 43560).toFixed(1)} acres (${props.shape_area.toLocaleString()} sq.ft.)</div>`;
+                                        }
+                                    }
+                                    
+                                    if (warehouseData?.Category) {
+                                        infoHtml += `<div><strong>Status:</strong> ${warehouseData.Category}</div>`;
+                                    }
+                                    if (warehouseData?.["Year built/approved"]) {
+                                        infoHtml += `<div><strong>Year:</strong> ${warehouseData["Year built/approved"]}</div>`;
+                                    }
+                                    infoHtml += `</div>`;
+                                    
+                                    // Make sure we have the right nodeId
+                                    currentNodeId = attrs.nodeId || attrs.id || attrs.name;
+                                    
+                                    // Find and display the mind map branch for this warehouse
+                                    const warehouseBranch = mindMapData.children.find(w => 
+                                        w.name === attrs.id || w.name === attrs.name
+                                    );
+                                    
+                                    if (warehouseBranch && warehouseBranch.children.length > 0) {
+                                        infoHtml += `<h5>Ownership Structure:</h5>`;
+                                        warehouseBranch.children.forEach(branch => {
+                                            infoHtml += `<div class="mind-map-branch" style="border-left-color: ${branch.color};">`;
+                                            infoHtml += `<div class="branch-title">${branch.name}</div>`;
+                                            infoHtml += `<div class="branch-details">${branch.details}</div>`;
+                                            if (branch.children && branch.children.length > 0) {
+                                                infoHtml += `<div class="tree-structure">`;
+                                                branch.children.forEach(entity => {
+                                                    infoHtml += `<div class="tree-node">`;
+                                                    infoHtml += `<strong>${entity.name}</strong><br>`;
+                                                    infoHtml += `<span style="font-size: 11px;">${entity.details}</span>`;
+                                                    infoHtml += `</div>`;
+                                                });
+                                                infoHtml += `</div>`;
+                                            }
+                                            infoHtml += `</div>`;
+                                        });
+                                    }
+                                    
+                                } else if (attrs.warehouseData || attrs.type === 'warehousePolygon') {
+                                    // Clicked on warehouse polygon
+                                    const props = attrs.warehouseData;
+                                    infoHtml = `<h4>Warehouse: ${props.apn}</h4>`;
+                                    infoHtml += `<div class="warehouse-details">`;
+                                    infoHtml += `<div><strong>Classification:</strong> ${props.class || props.building_classification || 'N/A'}</div>`;
+                                    infoHtml += `<div><strong>Year Built:</strong> ${props.year_built || 'N/A'}</div>`;
+                                    infoHtml += `<div><strong>Category:</strong> ${props.category || 'N/A'}</div>`;
+                                    if (props.shape_area) {
+                                        infoHtml += `<div><strong>Area:</strong> ${(props.shape_area / 43560).toFixed(1)} acres (${props.shape_area.toLocaleString()} sq.ft.)</div>`;
+                                    }
+                                    infoHtml += `</div>`;
+                                    
+                                    // Try to find corresponding node data
+                                    const warehouseNode = Object.values(nodes).find(n => {
+                                        if (n.type !== 'warehouse') return false;
+                                        const nodeApn = normalizeAPN(n.name);
+                                        const propsApn = normalizeAPN(props.apn);
+                                        return nodeApn === propsApn || n.name === props.apn || n.id === props.apn;
+                                    });
+                                    
+                                    if (warehouseNode && warehouseNode.data) {
+                                        const warehouseData = warehouseNode.data;
+                                        infoHtml += `<h5>Ownership Information:</h5>`;
+                                        
+                                        if (warehouseData.Developer) {
+                                            infoHtml += `<div class="branch-details"><strong>Developer:</strong> ${warehouseData.Developer}</div>`;
+                                        }
+                                        if (warehouseData["Purchaser/Merger"]) {
+                                            infoHtml += `<div class="branch-details"><strong>Owner:</strong> ${warehouseData["Purchaser/Merger"]}</div>`;
+                                        }
+                                        if (warehouseData.Leasee) {
+                                            infoHtml += `<div class="branch-details"><strong>Tenant:</strong> ${warehouseData.Leasee}</div>`;
+                                        }
+                                    }
+                                    
+                                } else if (attrs.type === "relationship") {
+                                    infoHtml = `<h4>${attrs.name}</h4>`;
+                                    infoHtml += `<p>${attrs.details}</p>`;
+                                    currentNodeId = attrs.nodeId || attrs.id || attrs.name;
+                                    
+                                } else if (attrs.type === "entity") {
+                                    infoHtml = `<h4>${attrs.name}</h4>`;
+                                    infoHtml += `<p><strong>Type:</strong> ${attrs.subtype.charAt(0).toUpperCase() + attrs.subtype.slice(1)}</p>`;
+                                    infoHtml += `<p>${attrs.details}</p>`;
+                                    if (attrs.connections > 0) {
+                                        infoHtml += `<p><strong>Connections:</strong> ${attrs.connections}</p>`;
+                                    }
+                                    currentNodeId = attrs.nodeId || attrs.id || attrs.name;
+                                    
+                                } else if (attrs.from && attrs.to) {
+                                    infoHtml = `<h4>Connection</h4>`;
+                                    infoHtml += `<p><strong>From:</strong> ${attrs.from}</p>`;
+                                    infoHtml += `<p><strong>To:</strong> ${attrs.to}</p>`;
+                                    infoHtml += `<p><strong>Type:</strong> ${attrs.type}</p>`;
+                                }
+                                
+                                document.getElementById("nodeInfo").innerHTML = infoHtml || "<p>Click on nodes for details</p>";
+                                
+                                // Add expand/collapse functionality for expandable nodes
+                                if (currentNodeId && (attrs.type === 'warehouse' || attrs.type === 'root' || 
+                                    (attrs.type === 'entity' && hasChildNodes(currentNodeId)))) {
+                                    const isCollapsed = collapsedNodes.has(currentNodeId);
+                                    const childCount = countDirectChildren(currentNodeId);
+                                    
+                                    if (childCount > 0) {
+                                        const toggleButton = `<button class="control-button secondary" style="margin-top: 10px; width: 100%;" onclick="window.toggleNodeExpansion('${currentNodeId}')">
+                                            ${isCollapsed ? '➕ Expand' : '➖ Collapse'} Node (${childCount} direct children)
+                                        </button>`;
+                                        document.getElementById("nodeInfo").innerHTML += toggleButton;
+                                    }
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Add keyboard shortcuts
+                    view.on("key-down", function(event) {
+                        if (event.key === "r" || event.key === "R") {
+                            view.goTo(nodeLayer.graphics.concat(edgeLayer.graphics).concat(warehouseLayer.graphics), {
+                                padding: { top: 50, bottom: 50, left: 50, right: 400 }
+                            });
+                        } else if (event.key === "c" || event.key === "C") {
+                            view.goTo({
+                                center: cityCoords["Bloomington, CA"],
+                                zoom: 11
+                            });
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.error("Failed to initialize map:", error);
+                    document.getElementById("loadingDiv").style.display = "none";
+                    document.getElementById("errorDiv").style.display = "block";
+                    document.getElementById("errorMessage").textContent = error.message;
+                }
+            }
+
+            // Start the application
+            initializeMap();
         });
-      }
-      
-      // Update the visualization
-      update(root);
-    }
-    
-    // Immediately set up the event listeners for the buttons
-    document.getElementById('expand-all').addEventListener('click', expandAll);
-    document.getElementById('collapse-all').addEventListener('click', collapseAll);
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const newWidth = document.getElementById('mind-map').clientWidth;
-      const newHeight = document.getElementById('mind-map').clientHeight;
-      
-      svg.attr('width', newWidth)
-         .attr('height', newHeight);
-      
-      tree.size([newHeight - margin.top - margin.bottom, newWidth - margin.left - margin.right - 200]);
-      
-      update(root);
-    });
-  </script>
+    </script>
 </body>
 </html>
